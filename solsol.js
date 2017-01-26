@@ -1,4 +1,4 @@
-(function () {
+(function (Oskari,$) {
 
     var css = document.createElement("style");
     css.type = "text/css";
@@ -48,7 +48,7 @@
 
             },
             getTitle: function () {
-                return "Pasianssi";
+                return "Solitaire";
             },
             getDescription: function () {},
             getOptions: function () {
@@ -61,7 +61,7 @@
             setup: function () {
                 var me = this;
                 var sandbox = me.instance.getSandbox();
-                var elContainer = jQuery(me.container);
+                var elContainer = $(me.container);
                 elContainer.empty();
 
                 /* hackzone begin */
@@ -73,8 +73,8 @@
 
                 /* hackzone end */
 
-                var elGame = jQuery(me.templates.game).clone();
-                var elToolbar = jQuery(me.templates.toolbar).clone();
+                var elGame = $(me.templates.game).clone();
+                var elToolbar = $(me.templates.toolbar).clone();
 
                 var me = this;
                 elToolbar.children('.solsol_btn_play').click(function () {
@@ -91,8 +91,8 @@
                     me.player.solNewGame();
                 });
 
-                jQuery(me.container).append(elGame);
-                jQuery(me.container).append(elToolbar);
+                $(me.container).append(elGame);
+                $(me.container).append(elToolbar);
 
                 this.player.startup(elGame.get()[0]);
 
@@ -105,10 +105,10 @@
      ** SolitairePlayer GPL (C) jjk
      ** Depends JQuery for drop zone visualisation drag drop and and animation
      *  This is 'read-only' version that plays the game without user interaction...
-     ** jQuery UI dependency dropped for now - may be resumed
+     ** $ UI dependency dropped for now - may be resumed
      */
     /**
-     * @todo remove jQuery deps
+     * @todo remove $ deps
      */
 
     Oskari.clazz.define("Oskari.mapframework.solsol.SolSolPlayer", function () {
@@ -1290,7 +1290,7 @@
                 this.container.empty();
             },
             getTitle: function () {
-                return "Pasianssi";
+                return "Solitaire";
             },
             getDescription: function () {},
             getOptions: function () {
@@ -1343,7 +1343,7 @@
          * @property __name
          *
          */
-        __name: 'SolSol',
+        __name: 'solsol',
         "getName": function () {
             return this.__name;
         },
@@ -1462,10 +1462,10 @@
             this.plugins['Oskari.userinterface.Tile'] = null;
         },
         getTitle: function () {
-            return "Pasianssi";
+            return "Solitaire";
         },
         getDescription: function () {
-            return "Pasianssi";
+            return "Solitaire";
         },
         getPlugins: function () {
             return this.plugins;
@@ -1599,4 +1599,7 @@
      Oskari.clazz
         .create(
             "Oskari.games.bundle.solsol.SolSolBundle").create().start()
-})();
+
+    Oskari.getSandbox().postRequestByName("userinterface.UpdateExtensionRequest",
+         [Oskari.getSandbox().findRegisteredModuleInstance("solsol"),"detach","solsol"]);
+})(Oskari,jQuery);
