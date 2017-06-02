@@ -119,6 +119,43 @@ paths:
           items:
             type: integer
           required: true
+          
+          
+  /regions/{RegionID}:
+    get:
+      operationId: getRegionInfo
+      summary: get Region basic information by ID
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/RegionsResponse'
+      parameters:
+        - name: RegionID
+          in: path
+          description: ID of Region to Fetch
+          required: true
+          type: integer
+          format: integer
+        
+  /regions/{RegionID}/geometry:
+    get:
+      operationId: getRegionGeometry
+      summary: get Region spatial dimension
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+      parameters:
+        - name: RegionID
+          in: path
+          description: ID of Region to Fetch
+          required: true
+          type: integer
+          format: integer  
         
 
 definitions:
@@ -201,6 +238,14 @@ definitions:
   RegionID:
     title: 'Region ID'
     type: integer
+    
+  Region:
+    type: object
+    
+  RegionsResponse:
+    type: array
+    items:
+      $ref: '#/definitions/Region'
 
   IndicatorID:
     title: 'Indicator ID'
