@@ -155,7 +155,57 @@ paths:
           description: ID of Region to Fetch
           required: true
           type: integer
-          format: integer  
+          format: integer 
+  
+  /categories/{CategoryID}/regions:
+    get:
+      operationId: getRegionsForCategory
+      summary: get Regions list for category
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/RegionsResponse'
+      parameters:
+        - name: CategoryID
+          in: path
+          description: ID of category to fetch regions
+          required: true
+          type: string
+          enum: 
+            - MAA
+            - MAAKUNTA
+            - SEUTUKUNTA
+            - KUNTA
+            - HILA30X30
+            - HILA10X10
+            - HILA5X5
+
+  /categories/{CategoryID}/regions/geometry:
+    get:
+      operationId: getRegionGeometriesForCategory
+      summary: get Region Geometries for category
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+      parameters:
+        - name: CategoryID
+          in: path
+          description: ID of category to fetch regions
+          required: true
+          type: string
+          enum: 
+            - MAA          
+            - MAAKUNTA
+            - SEUTUKUNTA
+            - KUNTA
+            - HILA30X30            
+            - HILA10X10
+            - HILA5X5
         
 
 definitions:
