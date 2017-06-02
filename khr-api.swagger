@@ -94,10 +94,54 @@ paths:
           type: integer
           format: integer
         
+  /indicators/{IndicatorID}/data:            
+    get:
+      operationId: getIndicatorFactsByID
+      summary: Get Indicator Facts by ID
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/FactsResponse'
+      parameters:
+        - name: IndicatorID
+          in: path
+          description: ID of Indicator to fetch
+          required: true
+          type: integer
+          format: integer
+        - name: years
+          in: query
+          type: array
+          collectionFormat: multi
+          items:
+            type: integer
+          required: true
         
 
 definitions:
 
+  FactsResponse:
+    type: array
+    items: 
+      $ref: '#/definitions/Fact'
+      
+  Fact:
+    type: object
+    properties:
+      indicator:
+        $ref: '#/definitions/IndicatorID' 
+      region:
+        $ref: '#/definitions/RegionID'
+      year: 
+        type: integer
+      gender: 
+        type: string
+      value: 
+        type: number
+    
   IndicatorsResponse:
     type: array
     items:
@@ -153,6 +197,10 @@ definitions:
     type: object
     additionalProperties:
       $ref: '#/definitions/Group'
+
+  RegionID:
+    title: 'Region ID'
+    type: integer
 
   IndicatorID:
     title: 'Indicator ID'
