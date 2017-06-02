@@ -9,6 +9,19 @@ schemes: ["https"]
 basePath: "/tilastopalvelu/rest/1.1"
 paths:
 
+  /codelists:
+    get:
+      operationId: getAPICodelists
+      summary: returns API codelists as JSON
+      description: Displays a list of codelists and localised texts
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CodelistsResponse'
+
   /groups:
     get:
       operationId: getGroups
@@ -272,6 +285,46 @@ definitions:
     items:
       $ref: '#/definitions/Indicator'
 
+  CodelistsResponse:
+    title: CodelistsResponse
+    type: object
+    additionalProperties:
+        $ref: '#/definitions/CodeList'
+  
+  CodeList:
+    title: CodeList
+    type: object
+    properties:
+      codeListType:
+        type: string
+        enum: [api]
+      codeList:
+        type: string
+      title:
+        $ref: '#/definitions/LocalisedString' 
+      codeValueList:
+        type: array
+        items:
+          type: string
+      codeValues:
+        $ref: '#/definitions/CodeValueMap'
+        
+      
+  CodeValueMap:
+    additionalProperties:
+        $ref: '#/definitions/CodeValue'
+        
+  CodeValue:
+    title: CodeValue
+    type: object
+    properties:
+      code:
+        type: string
+      title:
+        $ref: '#/definitions/LocalisedString'
+        
+      
+        
   RootGroupsResponse:
     title: GroupsResponse
     type: object
