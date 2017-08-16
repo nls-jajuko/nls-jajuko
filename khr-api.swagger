@@ -2,8 +2,15 @@
 swagger: '2.0'
 info:
   version: 1.3.0
-  title: Kiinteistökauppojen tilastopalvelu (REST) API 
-  description: A style describes how a resource is symbolized or rendered by the Web Map Service.
+  title: REST API for Statistical information on real estate transactions 
+  description: REST API for Statistical information on real estate transactions.
+  contact:
+    name: "API Support"
+    url: "hhttp://www.maanmittauslaitos.fi/kiinteistot/asiantuntevalle-kayttajalle/kiinteistotietojen-rajapintapalvelut/kiinteistokauppojen"
+    email: "sovellustuki@maanmittauslaitos.fi"
+  license:
+    name: "Maanmittauslaitoksen avoimen tietoaineiston CC 4.0 -lisenssi"
+    url: "http://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/maastotiedot-ja-niiden-hankinta/avoimen"
 host: khr.maanmittauslaitos.fi
 schemes: ["https"]
 basePath: "/tilastopalvelu/rest/1.1"
@@ -35,8 +42,7 @@ paths:
           schema:
             $ref: '#/definitions/RootGroupsResponse'
           examples:
-            application/json: '{}
-            '
+            application/json: '{}'
 
   /groups/{GroupID}:            
     get:
