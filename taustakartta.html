@@ -2,82 +2,82 @@
 <html>
 
 <head>
-    <title>WMTS 3d</title>
-    <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script>
-    <script src="Cesium.js"></script>
-    <script src="olcesium.js"></script>
-    <link rel="stylesheet" href="http://openlayers.org/en/v4.4.2/css/ol.css">
-    <style>
-        html,
-        body {
-            font-family: sans-serif;
-            width: 100%;
-            margin: 0;
-        }
-        
-        h3 {
-            padding: 5;
-            position: absolute;
-            left: 50px;
-            z-index: 10;
-        }
-        
-        .map {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 0;
-        }
-    </style>
+<title>WMTS 3d</title>
+<script
+	src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script>
+<script src="ol-cesium-v1.32/Cesium/Cesium.js"></script>
+<script src="ol-cesium-v1.32/olcesium.js"></script>
+<link rel="stylesheet" href="ol-cesium-v1.32/ol.css">
+<style>
+html, body {
+	font-family: sans-serif;
+	width: 100%;
+	margin: 0;
+}
+
+h3 {
+	padding: 5;
+	position: absolute;
+	left: 50px;
+	z-index: 10;
+}
+
+.map {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+}
+</style>
 </head>
 
 <body>
-    <h3>WMTS 3d</h3>
-    <div id="map" class="map"></div>
-    <script>
-        var centre = [27, 64],
-            zoom: 6,
-            map = new ol.Map({
-                target: 'map',
-                view: new ol.View({
-                    center: ol.proj.transform(centre, 'EPSG:4326', 'EPSG:3857'),
-                    zoom: zoom
-                })
-            });
+	<h3>WMTS 3d</h3>
+	<div id="map" class="map"></div>
+	<script>
+		var centre = [ 27, 64 ], zoom = 6, map = new ol.Map({
+			target : 'map',
+			view : new ol.View({
+				center : ol.proj.transform(centre, 'EPSG:4326', 'EPSG:3857'),
+				zoom : zoom
+			})
+		});
 
-        var ol3d = new olcs.OLCesium({
-                map: map
-            }),
-            scene = ol3d.getCesiumScene(),
-            parser = new ol.format.WMTSCapabilities();
+		var ol3d = new olcs.OLCesium({
+			map : map
+		}), scene = ol3d.getCesiumScene(), parser = new ol.format.WMTSCapabilities();
 
+		/*scene.terrainProvider = new Cesium.CesiumTerrainProvider({
+		    url: 'https://assets.agi.com/stk-terrain/world'
+		});
+		 */
 
-        /*scene.terrainProvider = new Cesium.CesiumTerrainProvider({
-            url: 'https://assets.agi.com/stk-terrain/world'
-        });
-        */
+		ol3d.setEnabled(true);
+		ol3d.getCamera().setTilt(0.9);
 
-        ol3d.setEnabled(true);
-        ol3d.getCamera().setTilt(0.9);
+		fetch(
+				'https://karttamoottori.maanmittauslaitos.fi/maasto/wmts/1.0.0/WMTSCapabilities.xml')
+				.then(function(response) {
+					return response.text();
+				}).then(
+						function(text) {
+							var result = parser.read(text);
 
-        fetch('//karttamoottori.maanmittauslaitos.fi/maasto/wmts/1.0.0/WMTSCapabilities.xml').then(function (response) {
-            return response.text();
-        }).then(function (text) {
-            var result = parser.read(text);
-
-            var km_tk_options = ol.source.WMTS.optionsFromCapabilities(result, {
-                    layer: 'taustakartta',
-                    matrixSet: 'WGS84_Pseudo-Mercator'
-                }),
-                taustakartta_layer = new ol.layer.Tile({
-                    opacity: 1,
-                    source: new ol.source.WMTS((km_tk_options))
-                });
-            map.addLayer(taustakartta_layer);
-        });
-    </script>
+							var km_tk_options = ol.source.WMTS
+									.optionsFromCapabilities(result, {
+										layer : 'taustakartta',
+										matrixSet : 'WGS84_Pseudo-Mercator'
+									}), taustakartta_layer = new ol.layer.Tile(
+									{
+										opacity : 1,
+										source : new ol.source.WMTS(
+												(km_tk_options))
+									});
+							map.addLayer(taustakartta_layer);
+						});
+	</script>
 </body>
 
 </html>
