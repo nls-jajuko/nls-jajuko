@@ -21,9 +21,7 @@
                 return 'Oskari.finland.bundle.struve.Flyout';
             },
             startPlugin: function () {
-                this.templates = {
-                    game: $('<div class="struve"></div>'),
-                    toolbar: $('<div class="struve_toolbar"><button class="struve_btn_play" style="display:none"/><button class="struve_btn_pause" /><button class="struve_btn_new" /></div>')
+                this.templates = {                  
                 };
             },
             onOpen: function () {
@@ -112,14 +110,16 @@
                     inst.eventHandlers = {
                         "FeatureEvent": function(featEvent) {
                             console.log("EVENT",featEvent);
-                            if( featEvent.getOperation() !== 'click') {
+                            if( featEvent.getOperation ? featEvent.getOperation() !== 'click' : featEvent._operation !== 'click' ) {
                                 return;
                             }
                             if( !featEvent.hasFeatures() ) {
                                 return;
                             }
                             
-                            this.getPlugins()['Oskari.userinterface.Flyout'].clicked(featEvent.getFeatures());
+                            var featContainer = featEvent.getFeatures ?  featEvent.getFeatures() : featEvent._features;
+                            
+                            this.getPlugins()['Oskari.userinterface.Flyout'].clicked(featContainer);
                         }
                     };
                     
@@ -176,8 +176,10 @@
 
     Oskari.clazz
         .create(
-            "Oskari.finland.bundle.struve.StruveBundle").create().start()
-
+            "Oskari.finland.bundle.struve.StruveBundle").create().start();
+    
+    
+    //  var sandbox = Oskari.getSandbox(),rn = 'userinterface.UpdateExtensionRequest'; args = [undefined,'detach','struve'];  sandbox.postRequestByName(rn, args);
 
     function getData() {
 
