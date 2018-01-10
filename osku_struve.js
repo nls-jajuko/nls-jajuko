@@ -2,8 +2,8 @@
 
     var css = document.createElement("style");
     css.type = "text/css";
-    css.innerHTML = ".struve {width : 100%;height: 100%;min-width: 512px;min-height: 480px;position: relative;left: 0;top: 0; border:1pt solid navy; border-radius: 5pt; background-color: rgba(250,250,250,0.7); }" +
-        ".struve_card {position: absolute;width: 57px;height: 83px;background-image: url('https://nls-jajuko.github.io/svg-cards-2.0-scaledDown.png');box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.80);}";
+    css.innerHTML = ".struve {width : 100%;height: 100%;min-width: 512px;min-height: 480px;}" ;
+     
     document.body.appendChild(css);
 
     Oskari.clazz.define('Oskari.finland.bundle.struve.Flyout',
