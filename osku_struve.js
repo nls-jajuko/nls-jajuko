@@ -1,4 +1,8 @@
 (function (Oskari, $, _) {
+	
+	// Copy-Paste add on to Oskari
+	// ds: http://www.paikkatietohakemisto.fi/geonetwork/srv/fin/catalog.search#/metadata/09f09ed4-8f84-42dd-b678-febe2d09f6a0
+	// Kiintopisteet: Tuote on avointa aineistoa
 
     var css = document.createElement("style");
     css.type = "text/css";
