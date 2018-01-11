@@ -1,16 +1,17 @@
 (function (Oskari, $, _) {
-	
-	// Copy-Paste add on to Oskari
-	// ds: http://www.paikkatietohakemisto.fi/geonetwork/srv/fin/catalog.search#/metadata/09f09ed4-8f84-42dd-b678-febe2d09f6a0
-	// Kiintopisteet: Tuote on avointa aineistoa
+
+    // Copy-Paste add on to Oskari 
+    // ds: http://www.paikkatietohakemisto.fi/geonetwork/srv/fin/catalog.search#/metadata/09f09ed4-8f84-42dd-b678-febe2d09f6a0
+    // Kiintopisteet: Tuote on avointa aineistoa
+    // proj: EPSG:3067
 
     var css = document.createElement("style");
     css.type = "text/css";
-    css.innerHTML = ".struve {width : 100%;height: 100%;min-width: 512px;min-height: 480px;}" ;
-     
+    css.innerHTML = ".struve {width : 100%;height: 100%;min-width: 512px;min-height: 480px;}";
+
     document.body.appendChild(css);
 
-    Oskari.clazz.define('Oskari.finland.bundle.struve.Flyout',
+    Oskari.clazz.define('Oskari.struve.Flyout',
         function (instance, locale) {
             this.locale = locale;
             this.instance = instance;
@@ -18,68 +19,66 @@
 
         }, {
             getName: function () {
-                return 'Oskari.finland.bundle.struve.Flyout';
-            },
-            startPlugin: function () {
-                this.templates = {                  
-                };
+                return 'Oskari.struve.Flyout';
             },
             onOpen: function () {
 
-                var sandbox = this.instance.getSandbox(),
-                    featureStyle = {
-                        stroke: {
-                            color: '#FF0000',
-                            width: 2
-                        },
-                        fill: {
-                            color: 'rgba(255,0,0, 0.2)'
-                        }
-                    },
-                    rn = 'MapModulePlugin.AddFeaturesToMapRequest',
-                    args = [getData(), {
+                var locale = this.locale,
+                    featuresSpec = {
                         layerId: 'Struve',
                         clearPrevious: true,
                         layerOptions: null,
                         centerTo: false,
                         cursor: 'pointer',
-                        featureStyle: featureStyle,
+                        featureStyle: {
+                            stroke: {
+                                color: '#FF0000',
+                                width: 3
+                            },
+                            fill: {
+                                color: 'rgba(255,0,0, 0.2)'
+                            }
+                        },
                         attributes: null,
-                        layerOrganizationName : 'Maanmittauslaitos',
-                        layerInspireName: 'Koordinaattijärjestelmät',
-                        layerDescription: 'Struven ketju',
+
                         layerPermissions: {
                             'publish': 'publication_permission_ok'
                         }
-                }];
-                sandbox.postRequestByName(rn, args);
+                    };
+                _.assign(featuresSpec, locale.layer);
+
+                this.issue('MapModulePlugin.AddFeaturesToMapRequest',
+                    getData(), featuresSpec);
             },
             onClose: function () {
-                
-                var sandbox = this.instance.getSandbox(),
-                    rn = 'MapModulePlugin.RemoveFeaturesFromMapRequest';                    
-                    args = [undefined,undefined,'Struve'];
-                sandbox.postRequestByName(rn, args);
+
+                this.issue(
+                    'MapModulePlugin.RemoveFeaturesFromMapRequest',
+                    undefined, undefined, 'Struve');
             },
-        
-            clicked: function(features) {
-                console.log("FEATURES",features);
-                
+
+            clicked: function (features) {
+                console.log("FEATURES", features);
+
                 var el = this.getEl();
                 el.empty();
-                _.each(features,function(featCont) {
-                    _.each(featCont.geojson.features,function(feat){
+                _.each(features, function (featCont) {
+                    _.each(featCont.geojson.features, function (feat) {
                         var props = feat.properties;
-                        
+
+                        if (!props.nimi && !props.selitysteksti && !props.euref_e && !props.euref_n) {
+                            return;
+                        }
+
                         el.append([
-                            '<div>',props.nimi,'</div>',
-                            '<div>',props.selitysteksti||'','</div>',
-                            '<div>','E: ',props.euref_e,', N: ', props.euref_n,'</div>'                                  
+                            '<div>', props.nimi, '</div>',
+                            '<div>', props.selitysteksti || '', '</div>',
+                            '<div>', 'E: ', props.euref_e, ', N: ', props.euref_n, '</div>'
                                   ].join(''));
                     })
                 });
-                
-            }            
+
+            }
         }, {
             'extend': ["Oskari.userinterface.extension.DefaultFlyout"],
             'protocol': ['Oskari.userinterface.Flyout']
@@ -92,93 +91,71 @@
      */
     Oskari.clazz
         .define(
-            "Oskari.finland.bundle.struve.StruveBundle",
+            "Oskari.struve.StruveBundle",
             function () {}, {
                 create: function () {
                     var inst = Oskari.clazz
                         .create("Oskari.userinterface.extension.DefaultExtension",
-                            "struve", 'Oskari.finland.bundle.struve.Flyout',
+                            "struve", 'Oskari.struve.Flyout',
                             "Oskari.userinterface.extension.DefaultTile", undefined, {
                                 tile: {
                                     title: 'Struve'
                                 },
                                 flyout: {
-                                    title: 'Struve'
+                                    title: 'Struve',
+                                    layer: {
+                                        layerOrganizationName: 'Maanmittauslaitos',
+                                        layerInspireName: 'Koordinaattijärjestelmät',
+                                        layerDescription: 'Struven ketju',
+                                    }
                                 }
                             });
-                    
+
                     inst.eventHandlers = {
-                        "FeatureEvent": function(featEvent) {
-                            console.log("EVENT",featEvent);
-                            if( featEvent.getOperation ? featEvent.getOperation() !== 'click' : featEvent._operation !== 'click' ) {
+                        "FeatureEvent": function (featEvent) {
+                            // not all versios support getOperation and getFeatures
+                            if (featEvent.getOperation ? featEvent.getOperation() !== 'click' : featEvent._operation !== 'click') {
                                 return;
                             }
-                            if( !featEvent.hasFeatures() ) {
+                            if (!featEvent.hasFeatures()) {
                                 return;
                             }
-                            
-                            var featContainer = featEvent.getFeatures ?  featEvent.getFeatures() : featEvent._features;
-                            
+
+                            var featContainer = featEvent.getFeatures ? featEvent.getFeatures() : featEvent._features;
+
                             this.getPlugins()['Oskari.userinterface.Flyout'].clicked(featContainer);
                         }
                     };
-                    
-                    
-                    
-                    
+
+
+
+
                     return inst;
                 },
                 "update": function (manager, bundle, bi, info) {
 
                 }
 
-            },
-            {
+            }, {
                 "protocol": ["Oskari.bundle.Bundle",
                     "Oskari.mapframework.bundle.extension.ExtensionBundle"],
-                "source": {
-                    "scripts": []
-                },
                 "bundle": {
                     "manifest": {
                         "Bundle-Identifier": "struve",
                         "Bundle-Name": "struve",
-                        "Bundle-Author": [{
-                            "Name": "jjk",
-                            "Organisation": "nls.fi",
-                            "Temporal": {
-                                "Start": "2009",
-                                "End": "2011"
-                            },
-                            "Copyleft": {
-                                "License": {
-                                    "License-Name": "EUPL",
-                                    "License-Online-Resource": "http://www.paikkatietoikkuna.fi/license"
-                                }
-                            }
-                        }],
-                        "Bundle-Name-Locale": {
-                            "fi": {
-                                "Name": " struve",
-                                "Title": " struve"
-                            },
-                            "en": {}
-                        },
                         "Bundle-Version": "1.0.0",
-                        "Import-Namespace": ["Oskari", "jQuery"],
-                        "Import-Bundle": {}
                     }
                 }
             });
-    
+
     Oskari.bundle_manager.installBundleClass("struve",
-        "Oskari.finland.bundle.struve.StruveBundle");
+        "Oskari.struve.StruveBundle");
 
     Oskari.clazz
         .create(
-            "Oskari.finland.bundle.struve.StruveBundle").create().start();
-    
-    
+            "Oskari.struve.StruveBundle").create().start();
+
+
     //  var sandbox = Oskari.getSandbox(),rn = 'userinterface.UpdateExtensionRequest'; args = [undefined,'detach','struve'];  sandbox.postRequestByName(rn, args);
 
     function getData() {
