@@ -11,6 +11,22 @@
 
     document.body.appendChild(css);
 
+
+    var struveImgSrc = {
+        // mustaviiri
+        "STRUV104": "//maanmittauslaitos.fi/sites/maanmittauslaitos.fi/files/inline-images/IMG_6912www.JPG",
+        // tornikallio
+        "STRUVE96": "//maanmittauslaitos.fi/sites/maanmittauslaitos.fi/files/inline-images/M-MaPe-St-012-2_sirkkaimage_www-compressor.jpg",
+        // oravivuori
+        "STRUVE80": "//maanmittauslaitos.fi/sites/maanmittauslaitos.fi/files/inline-images/M-MaPe-st-004_sirkkaimage-compressor.jpg",
+        // alatornion kirkko
+        "STRUVE36": "//maanmittauslaitos.fi/sites/maanmittauslaitos.fi/files/inline-images/Ma-MaPe-St-068_sirkkaimage-compressor.jpg",
+        // aavasaksa
+        "STRUVE31": "//maanmittauslaitos.fi/sites/maanmittauslaitos.fi/files/inline-images/MaPe-St-Aa-001_sirkkaimage.jpg",
+        //  Stuorrahanoaivi 
+        "STRUVE16": "//maanmittauslaitos.fi/sites/maanmittauslaitos.fi/files/inline-images/IMG_6754www.JPG"
+    };
+
     Oskari.clazz.define('Oskari.struve.Flyout',
         function (instance, locale) {
             this.locale = locale;
@@ -69,9 +85,17 @@
                         if (!props.nimi && !props.selitysteksti && !props.euref_e && !props.euref_n) {
                             return;
                         }
-
+                        
+                        var imgSrc = struveImgSrc[props.tunnus.trim()];
                         el.append([
-                            '<div>', props.nimi, '</div>',
+                            '<div>', props.nimi, '</div>'].join(''));
+
+                        if (imgSrc) {
+                            el.append([
+                                '<img style="width: 512px" src="',imgSrc,'">'
+                            ].join(''));
+                        }
+                        el.append([
                             '<div>', props.selitysteksti || '', '</div>',
                             '<div>', 'E: ', props.euref_e, ', N: ', props.euref_n, '</div>'
                                   ].join(''));
