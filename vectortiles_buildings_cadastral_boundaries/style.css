@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+div#form div {
+    margin-bottom: 0.1rem;
+}
+
+div#form {
+    position: absolute;
+    z-index: 1000;
+    right: 10px;
+    bottom: 10px;
+    width: 256px;
+    min-height: 250px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 2px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+div#features {
+    position: absolute;
+    z-index: 1000;
+    left: 10px;
+    bottom: 10px;
+    width: 256px;
+    height: 250px;
+    max-height: 250px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 2px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+div#features {
+    overflow: hidden;
+}
+
+div#features ul li div div {
+    font-family: 'Roboto';
+}
