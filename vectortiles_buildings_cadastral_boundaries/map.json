@@ -5,24 +5,24 @@
     "sources": {
         "boundaries": {
             "type": "vector",
-            "tiles": ["http://visukuvake.nls.fi/vertx-mvt/EPSG:900913/cadastral_boundaries/{z}/{x}/{y}/vector.pbf"]
+            "tiles": ["https://visukuvake.nls.fi/vertx-mvt/EPSG:900913/cadastral_boundaries/{z}/{x}/{y}/vector.pbf"]
         },
         "boundary_markers": {
             "type": "vector",
-            "tiles": ["http://visukuvake.nls.fi/vertx-mvt/EPSG:900913/cadastral_boundary_markers/{z}/{x}/{y}/vector.pbf"]
+            "tiles": ["https://visukuvake.nls.fi/vertx-mvt/EPSG:900913/cadastral_boundary_markers/{z}/{x}/{y}/vector.pbf"]
         },
         "buildings": {
             "type": "vector",
-            "tiles": ["http://visukuvake.nls.fi/vertx-mvt/EPSG:900913/buildings/{z}/{x}/{y}/vector.pbf"]
+            "tiles": ["https://visukuvake.nls.fi/vertx-mvt/EPSG:900913/buildings/{z}/{x}/{y}/vector.pbf"]
         },
         "roads": {
             "type": "vector",
-            "tiles": ["http://visukuvake.nls.fi/vertx-mvt/EPSG:900913/roads/{z}/{x}/{y}/vector.pbf"]
+            "tiles": ["https://visukuvake.nls.fi/vertx-mvt/EPSG:900913/roads/{z}/{x}/{y}/vector.pbf"]
         },
         "taustakartta": {
             "type": "raster",
             "tiles": [
-                "http://karttamoottori.maanmittauslaitos.fi/maasto/wmts?layer=taustakartta&style=default&tilematrixset=WGS84_Pseudo-Mercator&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
+                "https://karttamoottori.maanmittauslaitos.fi/maasto/wmts?layer=taustakartta&style=default&tilematrixset=WGS84_Pseudo-Mercator&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
             ],
             "tileSize": 256
         }
