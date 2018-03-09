@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
+
+  <head>
     <meta charset='utf-8' />
     <title>Vektoritiilet</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -9,73 +10,73 @@
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
     <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="//api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" />
-</head>
 
-<body>
+  </head>
+
+  <body>
     <div id="features">
-        <ul v-if="features.length">
-            <li v-for="feat in features">
-                <div v-for="(item,index) in feat.properties">
-                    <div>
-                        {{index}} : {{item}}
-                    </div>
-                </div>
-            </li>
-        </ul>
+      <ul v-if="features.length">
+        <li v-for="feat in features">
+          <div v-for="(item,index) in feat.properties">
+            <div>
+              {{index}} : {{item}}
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
     <div id="form">
-        <div>
-            <b-button size="sm" variant="primary" v-on:click="toggle_boundaries">
-                <span v-if="boundaries">Piilota kiinteistörajat</span>
-                <span v-if="!boundaries">Näytä kiinteistörajat</span>
-            </b-button>
-        </div>
-        <div>
-            <b-button size="sm" variant="primary" v-on:click="toggle_boundaryMarkers">
-                <span v-if="boundaryMarkers">Piilota rajamerkit</span>
-                <span v-if="!boundaryMarkers">Näytä rajamerkit</span>
-            </b-button>
-        </div>
+      <div>
+        <b-button size="sm" variant="primary" v-on:click="toggle_boundaries">
+          <span v-if="boundaries">Piilota kiinteistörajat</span>
+          <span v-if="!boundaries">Näytä kiinteistörajat</span>
+        </b-button>
+      </div>
+      <div>
+        <b-button size="sm" variant="primary" v-on:click="toggle_boundaryMarkers">
+          <span v-if="boundaryMarkers">Piilota rajamerkit</span>
+          <span v-if="!boundaryMarkers">Näytä rajamerkit</span>
+        </b-button>
+      </div>
 
 
-        <hr />
-        <div>
-            <b-button size="sm" variant="primary" v-on:click="hide_buildings">
-                <span>Piilota rakennukset</span>
-            </b-button>
-        </div>
-        <div>
-            <b-button size="sm" variant="primary" v-on:click="show_buildings">
-                <span>Näytä kaikki rakennukset</span>
-            </b-button>
-        </div>
+      <hr />
+      <div>
+        <b-button size="sm" variant="primary" v-on:click="hide_buildings">
+          <span>Piilota rakennukset</span>
+        </b-button>
+      </div>
+      <div>
+        <b-button size="sm" variant="primary" v-on:click="show_buildings">
+          <span>Näytä kaikki rakennukset</span>
+        </b-button>
+      </div>
 
-        <div>
-            <b-button size="sm" variant="success" v-show="!buildings_residential" v-on:click="toggle_buildings('residential')">
-                <span>Näytä vain asuinrakennukset</span>
-            </b-button>
-        </div>
-        <div>
-            <b-button size="sm" variant="success" v-show="!buildings_public" v-on:click="toggle_buildings('public')">
-                <span>Näytä julkiset rakennukset</span>
-            </b-button>
-        </div>
-        <div>
-            <b-button size="sm" variant="success" v-show="!buildings_cottage" v-on:click="toggle_buildings('cottage')">
-                <span>Näytä vain loma-asunnot</span>
-            </b-button>
-        </div>
-        <div>
-            <b-button size="sm" variant="success" v-show="!buildings_industrial" v-on:click="toggle_buildings('industrial')">
-                <span>Näytä vain teollisuusrakennukset</span>
-            </b-button>
-        </div>
-        <div>
-            <b-button size="sm" variant="success" rel="churches" v-show="!buildings_churches" v-on:click="toggle_buildings('churches')">
-                <span>Näytä vain kirkot</span>
-            </b-button>
-        </div>
+      <div>
+        <b-button size="sm" variant="success" v-show="!buildings_residential" v-on:click="toggle_buildings('residential')">
+          <span>Näytä vain asuinrakennukset</span>
+        </b-button>
+      </div>
+      <div>
+        <b-button size="sm" variant="success" v-show="!buildings_public" v-on:click="toggle_buildings('public')">
+          <span>Näytä julkiset rakennukset</span>
+        </b-button>
+      </div>
+      <div>
+        <b-button size="sm" variant="success" v-show="!buildings_cottage" v-on:click="toggle_buildings('cottage')">
+          <span>Näytä vain loma-asunnot</span>
+        </b-button>
+      </div>
+      <div>
+        <b-button size="sm" variant="success" v-show="!buildings_industrial" v-on:click="toggle_buildings('industrial')">
+          <span>Näytä vain teollisuusrakennukset</span>
+        </b-button>
+      </div>
+      <div>
+        <b-button size="sm" variant="success" rel="churches" v-show="!buildings_churches" v-on:click="toggle_buildings('churches')">
+          <span>Näytä vain kirkot</span>
+        </b-button>
+      </div>
 
 
     </div>
@@ -91,6 +92,7 @@
     <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
     <script src="main.js"></script>
-</body>
+  </body>
 
-</html> 
+</html>
+    
