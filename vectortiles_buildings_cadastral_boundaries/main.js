@@ -1,4 +1,4 @@
-window.addEventListener('load', function () {
+window.addEventListener('load', function() {
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiamFuc2t1IiwiYSI6ImNqMzJvNXRibzAwMDcyeG9jaHhwMnc2d2YifQ.mN0O1o-WgG6wvb9B06ChXw';
 
@@ -27,7 +27,7 @@ window.addEventListener('load', function () {
         };
 
     fetch('map.json').
-    then(function (response) {
+    then(function(response) {
         return response.json();
     }).then(map).then(ui)
 
@@ -46,7 +46,7 @@ window.addEventListener('load', function () {
 
         map.addControl(new mapboxgl.NavigationControl());
 
-        map.on('mousemove', function (e) {
+        map.on('mousemove', function(e) {
             var features = map.queryRenderedFeatures(e.point);
             featureData.features = features;
         });
@@ -67,21 +67,21 @@ window.addEventListener('load', function () {
             computed: {
                 buildings_filter: {
                     // setter
-                    set: function (newValue) {
+                    set: function(newValue) {
                         var clickedLayer = 'buildings',
                             filterValue = newValue ? this.buildings_filters[newValue] : undefined;
                         console.log("SETTING FILTER", map, clickedLayer, newValue, filterValue)
                         map.setFilter(clickedLayer, filterValue);
                     },
                     get: function() {
-                        
+
                     }
                 },
                 buildings: {
-                    get: function () {
+                    get: function() {
                         return this.__buildings;
                     },
-                    set: function (newValue) {
+                    set: function(newValue) {
                         this.__buildings = newValue;
                         var clickedLayer = 'buildings';
                         if (newValue) {
@@ -92,53 +92,53 @@ window.addEventListener('load', function () {
                     }
                 },
                 buildings_residential: {
-                    get: function () {
+                    get: function() {
                         return this.buildings && this.buildings_filter === 'residential';
                     }
                 },
                 buildings_public: {
-                    get: function () {
+                    get: function() {
                         return this.buildings && this.buildings_filter === 'public';
                     }
                 },
                 buildings_cottage: {
-                    get: function () {
+                    get: function() {
                         return this.buildings && this.buildings_filter === 'cottage';
                     }
                 },
                 buildings_industrial: {
-                    get: function () {
+                    get: function() {
                         return this.buildings && this.buildings_filter === 'industrial';
                     }
                 },
                 buildings_churches: {
-                    get: function () {
+                    get: function() {
                         return this.buildings && this.buildings_filter === 'churches';
                     }
                 }
             },
             methods: {
-                info: function () {
+                info: function() {
 
                 },
-                toggle_boundaries: function () {
+                toggle_boundaries: function() {
                     var b = !this.boundaries;
                     this.boundaries = b;
                     var clickedLayer = 'boundaries';
                     map.setLayoutProperty(clickedLayer, 'visibility', b ? 'visible' : 'none');
                 },
-                show_buildings: function () {
+                show_buildings: function() {
                     this.buildings_filter = undefined;
                     this.buildings = true;
                 },
-                hide_buildings: function () {
+                hide_buildings: function() {
                     this.buildings = false;
                 },
-                toggle_buildings: function (rel) {
+                toggle_buildings: function(rel) {
                     this.buildings_filter = rel;
                     this.buildings = true;
                 },
-                toggle_boundaryMarkers: function () {
+                toggle_boundaryMarkers: function() {
                     var b = !this.boundaryMarkers;
                     this.boundaryMarkers = b;
                     var clickedLayer = 'boundary_markers';
@@ -147,9 +147,4 @@ window.addEventListener('load', function () {
             }
         });
     }
-
-
-
-
-
 });
