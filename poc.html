@@ -68,7 +68,7 @@ var map = new ol.Map({
   target: 'map-container',
   layers: [
     new ol.TileLayer({
-      source: new ol.XYZSource({
+      source: new ol.source.XYZ({
         url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
       })
     })
