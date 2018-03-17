@@ -64,7 +64,7 @@
   
 <script>
   
-  var map = new ol.Map({
+var map = new ol.Map({
   target: 'map-container',
   layers: [
     new ol.TileLayer({
@@ -78,19 +78,20 @@
     zoom: 2
   })
 });
-  var overlay = new ol.Overlay({
+
+var overlay = new ol.Overlay({
   element: document.getElementById('popup-container'),
   positioning: 'bottom-center',
   offset: [0, -10]
 });
+      
 map.addOverlay(overlay);
   
-  map.on('click', function(e) {
+map.on('click', function(e) {
     overlay.setPosition(e.coordinate);
     var pixel = map.getPixelFromCoordinate(coordinate);
-  }
 });
   
-  </script>
+</script>
   
 </body>
