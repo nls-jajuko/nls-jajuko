@@ -1,162 +1,161 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
-<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
-<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-<link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<style>
-      html, body, #map-container {
-        margin: 0;
-        height: 100%;
-        width: 100%;
-        font-family: 'Titillium Web',sans-serif;
-      }
-  
-  
-  .arrow_box {
-    border-radius: 5px;
-        max-height: 300px; max-width:500px;
-  padding: 10px;
-    position: relative;
-    background: #fff;
-    border: 1px solid #003c88;
-}
-.arrow_box:after, .arrow_box:before {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-  .arrow_box:after {
-    border-color: rgba(255, 255, 255, 0);
-    border-top-color: #fff;
-    border-width: 10px;
-    margin-left: -10px;
-}
-.arrow_box:before {
-    border-color: rgba(153, 153, 153, 0);
-    border-top-color: #003c88;
-    border-width: 11px;
-    margin-left: -11px;
-}
-      
-      #popup-container { margin: 1rem; }
-  
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <style>
+        html,
+        body,
+        #map-container {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Titillium Web', sans-serif;
+        }
+        
+        .mapcarousel {
+            border-radius: 5px;
+            max-height: 300px;
+            max-width: 500px;
+            padding: 10px;
+            position: relative;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid #003c88;
+        }
+    
+     
+        #popup-container {
+            margin: 1rem;
+        }
+
     </style>
 </head>
+
 <body>
-<div id="map-container"></div>
-<div class="arrow_box" id="popup-container">
-      <div>
-      <b-carousel id="carousel1"
-                style="text-shadow: 1px 1px 2px #333;"
-                controls
-                indicators
-                background="#ababab"
-                :interval="4000"
-                img-width="1024"
-                img-height="480"
-                v-model="slide"
-                @sliding-start="onSlideStart"
-                @sliding-end="onSlideEnd"
-    >
-   
-      <b-carousel-slide v-for="(item, index) in items" img-src="{{item}}">
-        <h1>Hello world! at {{index}}</h1>
-      </b-carousel-slide>
+    <div id="map-container"></div>
+    <div class="mapcarousel" id="mapcarousel" v-show="isShow">
+        <div>
+             <div style="position:absolute; right:0.7rem; top:0.7rem; z-index:1000;">
+                 <b-button v-on:click="expand">
+                <i class="fa fa-expand"></i>
+                </b-button>
+                <b-button v-on:click="close">
+                <i class="fa fa-check-circle"></i>
+                </b-button>
+                
+                </div>
+            <b-carousel id="carousel1" style="text-shadow: 1px 1px 2px #333;" controls indicators background="#ababab" :interval="4000" img-width="1024" img-height="480" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
 
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          eros felis, tincidunt a tincidunt eget, convallis vel est. Ut pellentesque
-          ut lacus vel interdum.
-        </p>
-      </b-carousel-slide>
+                <b-carousel-slide v-for="(item, index) in images" :img-src=item.url :key="item.url">
+                    <h1>Hello world! at {{item.year}}</h1>
+                </b-carousel-slide>
 
-    </b-carousel>
+                <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+                    <p>
+                       n/a
+                    </p>
+                </b-carousel-slide>
 
-    <p class="mt-4">
-      Slide #: {{ slide }} /    Sliding: {{ sliding }}
-    </p>
+            </b-carousel>
 
-  </div>
-</div>
-  
-<script src="//cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-<script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script> 
-<script src="//unpkg.com/vue"></script>
-<script src="//cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
-<script src="//cdn.jsdelivr.net/npm/color-js@1.0.3"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js"></script> 
-<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
-<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
-<script src="//epsg.io/3067.js"></script>
-  
-<script>
-  
-var data = {
-  images: [
-      "https://lorempixel.com/1024/480/technics/2/",
-      "https://lorempixel.com/1024/480/technics/4/",
-      "https://lorempixel.com/1024/480/technics/8/",
-      "https://lorempixel.com/1024/480/technics/5/"  
-  ],
-  slide: 0,
-      sliding: null
-};
-      
-var center = [24,60],epsg='EPSG:900913',
-    map = new ol.Map({
-  target: 'map-container',
-  layers: [
-    new ol.layer.Tile({
-      source: new ol.source.XYZ({
-        url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
-      })
-    })
-  ],
-  view: new ol.View({
-    center:  ol.proj.transform(center, 'EPSG:4326', epsg),
-    zoom: 9
-  })
-});
+            <p class="mt-4">
+                Slide #: {{ slide }} / Sliding: {{ sliding }}
+               
+            </p>
+            
+           
 
-var overlay = new ol.Overlay({
-  element: document.getElementById('popup-container'),
-  positioning: 'bottom-center',
-  offset: [0, -10]
-});
-      
-map.addOverlay(overlay);
-  
-map.on('click', function(e) {
-    var coordinate = e.coordinate,
-        pixel = map.getPixelFromCoordinate(coordinate);
-    overlay.setPosition(coordinate);
+        </div>
+    </div>
 
-});
-      
-      
-var v = new Vue({
-    el: '#popup-container',
-    data: data,
-    methods: {
-     onSlideStart: function(slide) {
-      this.sliding = true
-     },
-     onSlideEnd: function (slide) {
-      this.sliding = false
-     }
-    }
-  });
-  
-</script>
-  
+    <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script>
+    <script src="//unpkg.com/vue"></script>
+    <script src="//cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
+    <script src="//cdn.jsdelivr.net/npm/color-js@1.0.3"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
+    <script src="//epsg.io/3067.js"></script>
+
+    <script>
+        var data = {
+            isShow: false,
+            images: [{
+                url: "https://lorempixel.com/1024/480/technics/2/",
+                year: "1990"
+            }, {
+                url: "https://lorempixel.com/1024/480/technics/4/",
+                year: "1991"
+            }, {
+                url: "https://lorempixel.com/1024/480/technics/8/",
+                year: "1992"
+            }, {
+                url: "https://lorempixel.com/1024/480/technics/5/",
+                year: "1993"
+            }],
+            slide: 0,
+            sliding: null
+        };
+
+        var center = [24, 60],
+            epsg = 'EPSG:900913',
+            map = new ol.Map({
+                target: 'map-container',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.XYZ({
+                            url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
+                        })
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.transform(center, 'EPSG:4326', epsg),
+                    zoom: 9
+                })
+            });
+
+        var overlay = new ol.Overlay({
+            element: document.getElementById('mapcarousel'),
+            positioning: 'center-center',
+            offset: [0, 0]
+        });
+
+        map.addOverlay(overlay);
+
+        map.on('click', function(e) {
+            var coordinate = e.coordinate,
+                pixel = map.getPixelFromCoordinate(coordinate);
+            overlay.setPosition(coordinate);
+            data.isShow=true;
+
+        });
+
+
+        var v = new Vue({
+            el: '#mapcarousel',
+            data: data,
+            methods: {
+                onSlideStart: function(slide) {
+                    this.sliding = true
+                },
+                onSlideEnd: function(slide) {
+                    this.sliding = false
+                },
+                close: function() {
+                    this.isShow = false;
+                },
+                expand: function() {
+                    
+                }
+            }
+        });
+
+    </script>
+
 </body>
