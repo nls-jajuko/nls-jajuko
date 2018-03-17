@@ -125,7 +125,8 @@ var data = {
       sliding: null
 };
       
-var map = new ol.Map({
+var center = [24,60],epsg='EPSG:900913',
+    map = new ol.Map({
   target: 'map-container',
   layers: [
     new ol.layer.Tile({
@@ -135,7 +136,7 @@ var map = new ol.Map({
     })
   ],
   view: new ol.View({
-    center: [0, 0],
+    center:  ol.proj.transform(center, 'EPSG:4326', epsg),
     zoom: 2
   })
 });
