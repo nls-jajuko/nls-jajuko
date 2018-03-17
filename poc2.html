@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <style>
-        html,
+            html,
         body,
         #map-container {
             margin: 0;
@@ -18,18 +18,23 @@
         
         .mapcarousel {
             border-radius: 5px;
-            max-height: 300px;
-            max-width: 500px;
+            width: 500px;
+            height: 290px;
             padding: 10px;
             position: relative;
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid #003c88;
         }
-    
-     
+        
         #popup-container {
             margin: 1rem;
         }
+        
+        .slide-info {
+            color: white;
+            ) #carousel1 {
+                text-shadow: 1px 1px 2px #333;
+            }
 
     </style>
 </head>
@@ -38,35 +43,31 @@
     <div id="map-container"></div>
     <div class="mapcarousel" id="mapcarousel" v-show="isShow">
         <div>
-             <div style="position:absolute; right:0.7rem; top:0.7rem; z-index:1000;">
-                 <b-button v-on:click="expand">
-                <i class="fa fa-expand"></i>
+            <div style="position:absolute; right:0.7rem; top:0.7rem; z-index:1000;">
+
+                <span class="slide-info">Slide #: {{ slide }} / Sliding: {{ sliding }}</span>
+
+
+                <b-button v-on:click="expand">
+                    <i class="fa fa-expand"></i>
                 </b-button>
                 <b-button v-on:click="close">
-                <i class="fa fa-check-circle"></i>
+                    <i class="fa fa-check-circle"></i>
                 </b-button>
-                
-                </div>
-            <b-carousel id="carousel1" style="text-shadow: 1px 1px 2px #333;" controls indicators background="#ababab" :interval="4000" :img-width=imgWidth :img-height=imgHeight v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
+
+            </div>
+            <b-carousel id="carousel1" controls indicators background="rgba(240,240,240,0.8)" :interval="0" :img-width=imgWidth :img-height=imgHeight v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
 
                 <b-carousel-slide v-for="(item, index) in images" :img-src=item.url :key="item.url">
                     <h1>Hello world! at {{item.year}}</h1>
                 </b-carousel-slide>
 
                 <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-                    <p>
-                       n/a
-                    </p>
+                    <h1>n/a</h1>
                 </b-carousel-slide>
 
             </b-carousel>
 
-            <p class="mt-4">
-                Slide #: {{ slide }} / Sliding: {{ sliding }}
-               
-            </p>
-            
-           
 
         </div>
     </div>
@@ -87,9 +88,10 @@
         var data = {
             bbox: undefined,
             imgWidth: 480,
-            imgHeight: 270, 
+            imgHeight: 270,
             isShow: false,
-            images: [{
+            images: [],
+            samples: [{
                 url: "https://lorempixel.com/1024/480/technics/2/",
                 year: "1990"
             }, {
@@ -108,12 +110,34 @@
 
         var center = [24, 60],
             epsg = 'EPSG:900913',
+            vectorSource = new ol.source.Vector({
+                features: []
+            }),
             map = new ol.Map({
                 target: 'map-container',
                 layers: [
                     new ol.layer.Tile({
+                        opacity: 0.9,
                         source: new ol.source.XYZ({
                             url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
+                        })
+                    }),
+                    new ol.layer.Vector({
+                        source: vectorSource,
+                        style: new ol.style.Style({
+                            fill: new ol.style.Fill({
+                                color: 'rgba(255, 255, 255, 0.2)'
+                            }),
+                            stroke: new ol.style.Stroke({
+                                color: 'black',
+                                width: 1
+                            }),
+                            image: new ol.style.Circle({
+                                radius: 7,
+                                fill: new ol.style.Fill({
+                                    color: '#ffcc33'
+                                })
+                            })
                         })
                     })
                 ],
@@ -135,18 +159,36 @@
             var coordinate = e.coordinate,
                 pixel = map.getPixelFromCoordinate(coordinate),
                 res = map.getView().getResolution(),
-                w = data.imgWidth, h = data.imgHeight,
-                bbox = [coordinate[0]-w/2,coordinate[1]-h/2,coordinate[0]+w/2,coordinate[1]+h/2];
-            console.log( bbox);
+                w = data.imgWidth,
+                h = data.imgHeight,
+                lb = map.getCoordinateFromPixel([pixel[0] - w / 2, pixel[1] + h / 2]),
+                rt = map.getCoordinateFromPixel([pixel[0] + w / 2, pixel[1] - h / 2]),
+                lt = map.getCoordinateFromPixel([pixel[0] - w / 2, pixel[1] - h / 2]),
+                rb = map.getCoordinateFromPixel([pixel[0] + w / 2, pixel[1] + h / 2]),
+                bbox = [lb[0], lb[1], rt[0], rt[1]],
+             
+            geom = ol.geom.Polygon.fromExtent(bbox),
+                featurething = new ol.Feature({
+                    name: "Thing",
+                    geometry: geom
+                });
+            vectorSource.addFeature(featurething);
+            vectorSource.changed();
+
+
+            console.log( bbox, featurething, geom);
             overlay.setPosition(coordinate);
-            
+
             data.bbox = bbox;
-            
+            data.images = data.samples;
             // fetch images - then ()
             // lookup years
             // build urls and years to newImages
             // this.images = newImages
-            data.isShow=true;
+
+            data.isShow = true;
+
+
 
         });
 
@@ -165,7 +207,8 @@
                     this.isShow = false;
                 },
                 expand: function() {
-                    
+                    console.log("SET YEAR TO ", this.images[this.slide].year);
+                    this.isShow = false;
                 }
             }
         });
