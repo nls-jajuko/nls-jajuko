@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+
+   <style>
+            html,
+        body,
+        #map-container {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Titillium Web', sans-serif;
+        }
+        
+        .mapcarousel {
+            border-radius: 5px;
+            width: 500px;
+            height: 290px;
+            padding: 10px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #003c88;
+        }
+        
+        #popup-container {
+            margin: 1rem;
+        }
+        
+        .slide-info {
+            color: white;
+            ) #carousel1 {
+                text-shadow: 1px 1px 2px #333;
+            }
+
+    </style>
+</head>
+
+<body>
+    <div id="map-container"></div>
+    <div class="mapcarousel" id="mapcarousel" v-show="isShow">
+        <div>
+            <div style="position:absolute; right:0.7rem; top:0.7rem; z-index:1000;">
+
+                <!--span class="slide-info">Slide #: {{ slide }} / Sliding: {{ sliding }}</span-->
+
+                <b-button v-on:click="reset">
+                    <i class="fas fa-redo"></i>
+                </b-button>
+                <b-button v-on:click="expand">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </b-button>
+                <b-button v-on:click="close">
+                    <i class="far fa-check-circle"></i>
+                </b-button>
+
+            </div>
+            <b-carousel id="carousel1" controls indicators background="rgba(240,240,240,0.8)" :interval="0" :img-width=imgWidth :img-height=imgHeight v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
+
+                <b-carousel-slide v-for="(item, index) in images" :img-src=item.url :key="item.url">
+                    <span>The world as we know up to {{item.year}}</span>
+                </b-carousel-slide>
+
+                <!--b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+                    <h1>n/a</h1>
+                </b-carousel-slide-->
+
+            </b-carousel>
+
+
+        </div>
+    </div>
+
+
+    <!-- https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fjpeg&TRANSPARENT=false&LAYERS=ortokuva&WIDTH=256&HEIGHT=256&CRS=EPSG%3A3857&STYLES=&BBOX=234814.55089206249%2C6574807.42497772%2C313086.067856083%2C6653078.94194174 
+
+
+https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fjpeg&TRANSPARENT=false&LAYERS=ortokuva&WIDTH=256&HEIGHT=256&CRS=EPSG%3A3857&STYLES=&BBOX=313086.06785608083%2C6574807.42497772%2C391357.5848201013%2C6653078.94194174
+-->
+
+
+
+    <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script>
+    <script src="//unpkg.com/vue"></script>
+    <script src="//cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
+    <script src="//cdn.jsdelivr.net/npm/color-js@1.0.3"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
+    <script src="//epsg.io/3067.js"></script>
+
+    <script>
+        var data = {
+            bbox: undefined,
+            imgWidth: 480,
+            imgHeight: 270,
+            isShow: false,
+            images: [],
+            samples: [{
+                url: "https://lorempixel.com/1024/480/technics/2/",
+                year: "1990"
+            }, {
+                url: "https://lorempixel.com/1024/480/technics/4/",
+                year: "1991"
+            }, {
+                url: "https://lorempixel.com/1024/480/technics/8/",
+                year: "1992"
+            }, {
+                url: "https://lorempixel.com/1024/480/technics/5/",
+                year: "1993"
+            }],
+            slide: 0,
+            sliding: null
+        };
+
+        var start = '1940',
+            center = [24, 60],
+            epsg = 'EPSG:3067',
+            vectorSource = new ol.source.Vector({
+                features: []
+            }),
+            tileSource = new ol.source.TileWMS({
+                url: 'https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?',
+                params: {
+                    'FORMAT': 'image/jpeg',
+                    'TRANSPARENT': false,
+                    'LAYERS': 'ortokuva'
+                        // &TIME=1985%2F2001&
+                }
+            }),
+            map = new ol.Map({
+                target: 'map-container',
+                layers: [
+                    new ol.layer.Tile({
+                        opacity: 0.9,
+                        source: tileSource
+                    }),
+                    new ol.layer.Vector({
+                        source: vectorSource,
+                        style: new ol.style.Style({
+                            /*fill: new ol.style.Fill({
+                                color: 'rgba(255, 255, 255, 0.2)'
+                            }),*/
+                            stroke: new ol.style.Stroke({
+                                color: 'black',
+                                width: 1, lineDash: [5,10]
+                            }),
+                            image: new ol.style.Circle({
+                                radius: 7,
+                                fill: new ol.style.Fill({
+                                    color: '#ffcc33'
+                                })
+                            })
+                        })
+                    })
+                ],
+                view: new ol.View({
+                    projection: epsg,
+                    center: [377174.2090743212, 6673073.523698647],
+                    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5],
+                    resolution: 2,
+                    maxResolution: 8192,
+                    minResolution: 0.5
+                })
+            });
+
+        var overlay = new ol.Overlay({
+            element: document.getElementById('mapcarousel'),
+            positioning: 'center-center',
+            offset: [0, 0]
+        });
+
+        map.addOverlay(overlay);
+
+        map.on('click', function(e) {
+            var coordinate = e.coordinate,
+                pixel = map.getPixelFromCoordinate(coordinate),
+                res = map.getView().getResolution(),
+                w = data.imgWidth,
+                h = data.imgHeight,
+                lb = map.getCoordinateFromPixel([pixel[0] - w / 2, pixel[1] + h / 2]),
+                rt = map.getCoordinateFromPixel([pixel[0] + w / 2, pixel[1] - h / 2]),
+                lt = map.getCoordinateFromPixel([pixel[0] - w / 2, pixel[1] - h / 2]),
+                rb = map.getCoordinateFromPixel([pixel[0] + w / 2, pixel[1] + h / 2]),
+                bbox = [lb[0], lb[1], rt[0], rt[1]],
+
+                geom = ol.geom.Polygon.fromExtent(bbox),
+                featurething = new ol.Feature({
+                    name: "Thing",
+                    geometry: geom
+                });
+            vectorSource.addFeature(featurething);
+            vectorSource.changed();
+
+
+            console.log(bbox, featurething, geom);
+            overlay.setPosition(coordinate);
+
+            var newImages = [],
+                yearsForCoord = [1998, 2008, 2018]; // tbd fetch from backend
+
+            _.each(_.reverse(_.clone(yearsForCoord)), function(y) {
+                var url = tileSource.getUrls()[0] + "";
+                _.each(tileSource.getParams(), function(val, key) {
+                    url += key + "=" + val + "&";
+                });
+                url += "REQUEST=GetMap&VERSION=1.3.0&SERVICE=WMS&STYLES=&";
+                url += "CRS=" + epsg + "&";
+                url += "WIDTH=" + w + "&";
+                url += "HEIGHT=" + h + "&";
+                url += 'BBOX=' + bbox.join(',') + "&";
+                url += "TIME=" + start + "/" + y;
+                newImages.push({
+                    year: y,
+                    url: url
+                });
+
+            });
+
+
+            data.bbox = bbox;
+            data.images = newImages; //data.samples;
+            // fetch images - then ()
+            // lookup years
+            // build urls and years to newImages
+            // this.images = newImages
+
+            data.isShow = true;
+
+
+
+        });
+
+
+        var v = new Vue({
+            el: '#mapcarousel',
+            data: data,
+            methods: {
+                onSlideStart: function(slide) {
+                    this.sliding = true
+                },
+                onSlideEnd: function(slide) {
+                    this.sliding = false
+                },
+                close: function() {
+                    this.isShow = false;
+                },
+                expand: function() {
+                    var y = this.images[this.slide].year;
+                    if (!y) {
+                        return;
+                    }
+                    console.log("SET YEAR TO ", y);
+                    this.isShow = false;
+
+                    tileSource.updateParams({
+                        'TIME': start + '/' + y
+                    });
+                },
+                reset: function() {
+                    tileSource.updateParams({
+                        'TIME': undefined
+                    });
+                    this.isShow = false;
+                }
+            }
+        });
+
+    </script>
+
+</body>
