@@ -5,9 +5,51 @@
 <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
 <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<style>
+      html, body, #map-container {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        font-family: 'Titillium Web',sans-serif;
+      }
   
+  
+  .arrow_box {
+    border-radius: 5px;
+  padding: 10px;
+    position: relative;
+    background: #fff;
+    border: 1px solid #003c88;
+}
+.arrow_box:after, .arrow_box:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+  .arrow_box:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #fff;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.arrow_box:before {
+    border-color: rgba(153, 153, 153, 0);
+    border-top-color: #003c88;
+    border-width: 11px;
+    margin-left: -11px;
+}
+  
+    </style>
 </head>
 <body>
+<div id="map-container"></div>
+<div class="arrow_box" id="popup-container"></div>
+  
 <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
 <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script> 
 <script src="//unpkg.com/vue"></script>
@@ -20,5 +62,35 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
 <script src="//epsg.io/3067.js"></script>
   
+<script>
+  
+  var map = new ol.Map({
+  target: 'map-container',
+  layers: [
+    new ol.TileLayer({
+      source: new ol.XYZSource({
+        url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
+      })
+    })
+  ],
+  view: new ol.View({
+    center: [0, 0],
+    zoom: 2
+  })
+});
+  var overlay = new Overlay({
+  element: document.getElementById('popup-container'),
+  positioning: 'bottom-center',
+  offset: [0, -10]
+});
+map.addOverlay(overlay);
+  
+  map.on('click', function(e) {
+    overlay.setPosition(e.coordinate);
+    var pixel = map.getPixelFromCoordinate(coordinate);
+  }
+});
+  
+  </script>
   
 </body>
