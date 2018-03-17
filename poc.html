@@ -154,7 +154,7 @@ map.on('click', function(e) {
 });
       
       
-var v = new Vue(
+var v = new Vue({
     el: '#popup-container',
     data: data,
     methods: {
@@ -164,7 +164,7 @@ var v = new Vue(
     onSlideEnd: function (slide) {
       this.sliding = false
     }
-  }
+  });
   
 </script>
   
