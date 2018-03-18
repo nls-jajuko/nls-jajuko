@@ -81,7 +81,7 @@
                     <span>Kuvat ml. {{item.year}}</span>
                 </b-carousel-slide>
             </b-carousel>
-       </div>
+        </div>
     </div>
 
 
@@ -169,16 +169,6 @@
             },
             timeline_json = {
                 "events": [{
-                    unique_id: "1988",
-                    "start_date": {
-
-                        "year": "1988"
-                    },
-                    "text": {
-                        "headline": "Kuvat ml. 1988",
-                        "text": "<p>.</p>"
-                    }
-                }, {
                     unique_id: "1998",
                     "start_date": {
 
@@ -252,11 +242,12 @@
                 yearsForCoord.push(el.unique_id);
             });
 
-            var urlBase = tileSource.getUrls()[0] + "",
-                urlParts = [];
+
 
             _.each(_.reverse(yearsForCoord), function(y) {
 
+                var urlBase = tileSource.getUrls()[0] + "",
+                    urlParts = [];
                 _.each(tileSource.getParams(), function(val, key) {
                     urlParts.push([key, val].join('='));
                 });
@@ -272,6 +263,7 @@
                     year: y,
                     url: url
                 });
+
 
             });
 
