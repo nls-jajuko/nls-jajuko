@@ -134,16 +134,18 @@
     <script src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
 
     <script>
-        var wmsUrl = 'https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?',
+        var initialYear = 2018, beginYear = 1998,
+            wmsUrl = 'https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?',
             data = {
-                begin: 1998,
-                yyyy: 2018,
+                yyyy: initialYear,
+                begin: beginYear,
+                end: initialYear,
                 bbox: undefined,
                 imgWidth: 480,
                 imgHeight: 270,
                 isShow: false,
                 images: [],
-                slide: 0,
+                slide: initialYear-beginYear,
                 sliding: null
             },
             epsg = 'EPSG:3067',
@@ -223,7 +225,7 @@
                 ]
             };
 
-        _.each(_.range(data.begin, data.yyyy + 1), function(y) {
+        _.each(_.range(data.begin, data.end + 1), function(y) {
             var year = '' + y;
             timeline_json.events.push({
 
@@ -276,15 +278,16 @@
             overlay.setPosition(coordinate);
 
             var newImages = [],
-                yearsForCoord = []; // tbd fetch from backend
+                yearsForCoord = [],
+                slidePos; // tbd fetch from backend
 
             _.each(timeline_json.events, function(el) {
                 yearsForCoord.push(el.unique_id);
             });
 
 
-
-            _.each(_.reverse(yearsForCoord), function(y) {
+            
+            _.each(yearsForCoord, function(y) {
 
                 var urlBase = tileSource.getUrls()[0] + "",
                     urlParts = [];
@@ -299,17 +302,26 @@
                 urlParts.push("TIME=" + data.begin + "/" + y);
 
                 var url = urlBase + urlParts.join('&');
+                
+                if( y == data.yyyy ) {
+                    slidePos = newImages.length;
+                    console.log(slidePos, y, data.yyyy, " - selected pos");
+                }
+                
+                
                 newImages.push({
                     year: y,
                     url: url
                 });
 
+                
 
             });
 
             data.bbox = bbox;
             data.images = newImages;
             data.isShow = true;
+            data.slide = slidePos;
 
         });
 
@@ -322,7 +334,9 @@
                 return;
             }
 
-            if (y == data.yyyy) {
+            data.yyyy = y;
+            
+            if (y == data.end) {
                 tileSource.updateParams({
                     'TIME': undefined
                 });
@@ -360,7 +374,7 @@
                 },
                 reset: function() {
 
-                    timeline.goToId(this.yyyy + '');
+                    timeline.goToId(this.end + '');
                     this.isShow = false;
                 }
             }
