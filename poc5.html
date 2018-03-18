@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
     <link title="timeline-styles" rel="stylesheet" href="//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
     <link title="timeline-styles" rel="stylesheet" href="//cdn.knightlab.com/libs/timeline3/latest/css/fonts/font.ubuntu.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" type="text/css">
+
 
     <style>
         html,
@@ -73,12 +75,28 @@
             top: 0.9rem;
             z-index: 1000;
         }
+        
+        div#status {
+            position: absolute;
+            left: 1rem;
+            top: 10rem;
+            min-height: 1em;
+            width: 150px;
+            z-index: 3000;
+            padding: 5px;
+            margin: 2px;
+            border: 1px solid #c0c0c0;
+            border-radius: 5px;
+            font-size: 0.7em; color: white;
+        }
+        .ol-zoom { position: absolute; z-index: 2000; right: 1rem ; top : 10rem; left: auto; }
 
     </style>
 </head>
 
 <body>
     <div id='timeline-embed' style="width: 100%; height: 150px"></div>
+    <div id="status"></div>
     <div id="map-container"></div>
     <div class="mapcarousel" id="mapcarousel" v-show="isShow">
         <div>
@@ -129,6 +147,8 @@
                 sliding: null
             },
             epsg = 'EPSG:3067',
+            matrixSet = 'ETRS-TM35FIN',
+            template = '<div>' + epsg + ' (' + matrixSet + ')</div><div> EN ({x}, {y})</div>',
             vectorSource = new ol.source.Vector({
                 features: []
             }),
@@ -141,7 +161,21 @@
                         // &TIME=1985%2F2001&
                 }
             }),
+            mousePositionControl = new ol.control.MousePosition({
+                coordinateFormat: function(coord) {
+                    return ol.coordinate.format(coord, template, 0);
+                },
+                projection: epsg,
+                className: 'custom-mouse-position',
+                target: document.getElementById('status'),
+                undefinedHTML: '&nbsp;'
+            }),
             map = new ol.Map({
+                controls: ol.control.defaults({
+                    attributionOptions: {
+                        collapsible: false
+                    }
+                }).extend([mousePositionControl]),
                 target: 'map-container',
                 layers: [
                     new ol.layer.Tile({
