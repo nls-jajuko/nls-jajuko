@@ -313,8 +313,28 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
         });
 
         timeline = new TL.Timeline('timeline-embed', timeline_json,additionalOptions);
-        timeline = new TL.Timeline('timeline-embed', timeline_json,additionalOptions);
-
+        
+    //https://github.com/NUKnightLab/TimelineJS3/blob/master/API.md
+        
+        timeline.on('change',function(e) {
+            var y  = e.unique_id;
+            
+            if( !y ) {
+                return;
+            }
+            
+            if( y === data.yyyy ) {
+                 tileSource.updateParams({
+                        'TIME': undefined
+                    });
+                
+            } else {
+                    tileSource.updateParams({
+                        'TIME': start + '/' + y
+                    });
+            }
+            
+        })
 
         var v = new Vue({
             el: '#mapcarousel',
@@ -337,15 +357,10 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
                     console.log("SET YEAR TO ", y);
                     this.isShow = false;
 
-                    tileSource.updateParams({
-                        'TIME': start + '/' + y
-                    });
                     timeline.goToId(y+'');
                 },
                 reset: function() {
-                    tileSource.updateParams({
-                        'TIME': undefined
-                    });
+                   
                     timeline.goToId(this.yyyy);
                     this.isShow = false;
                 }
