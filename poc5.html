@@ -54,7 +54,7 @@
         }
         
         #timeline-embed {
-            background-color: white;
+            background-color: rgba(20 ,20,40,0.5) !important;
             z-index: 1000;
             position: absolute;
             left: 0px;
@@ -62,13 +62,13 @@
         }
         
         .tl-headline {
-            font-size: 1rem !important;
+            font-size: 12px !important;
         }
         
         .tl-headline-date {
             font-size: 1rem!important;
         }
-        
+        .tl-timenav { background-color: rgba(255,255,255,0.1) !important;}
         .tools {
             position: absolute;
             right: 6rem;
@@ -78,8 +78,8 @@
         
         div#status {
             position: absolute;
-            left: 1rem;
-            top: 10rem;
+            right: 1rem;
+            top: 1rem;
             min-height: 1em;
             width: 150px;
             z-index: 3000;
@@ -89,7 +89,7 @@
             border-radius: 5px;
             font-size: 0.7em; color: white;
         }
-        .ol-zoom { position: absolute; z-index: 2000; right: 1rem ; top : 10rem; left: auto; }
+        .ol-zoom { position: absolute; z-index: 2000; right: 1rem ; top : 4rem; left: auto; }
 
     </style>
 </head>
@@ -220,37 +220,6 @@
             },
             timeline_json = {
                 "events": [
-                    /*{
-                                        unique_id: "1998",
-                                        "start_date": {
-
-                                            "year": "1998"
-                                        },
-                                        "text": {
-                                            "headline": "Kuvat ml. 1998",
-                                            "text": "<p>.</p>"
-                                        }
-                                    }, {
-                                        unique_id: "2008",
-                                        "start_date": {
-
-                                            "year": "2008"
-                                        },
-                                        "text": {
-                                            "headline": "Kuvat ml. 2008",
-                                            "text": "<p>.</p>"
-                                        }
-                                    }, {
-                                        unique_id: "2018",
-                                        "start_date": {
-
-                                            "year": "2018"
-                                        },
-                                        "text": {
-                                            "headline": "Kuvat ml. 2018",
-                                            "text": "<p>.</p>"
-                                        }
-                                    }*/
                 ]
             };
 
@@ -264,7 +233,7 @@
                     "year": year
                 },
                 "text": {
-                    "headline": "Kuvat ml. " + year,
+                    "headline": '' + year,
                     "text": "<p>.</p>"
                 }
             });
