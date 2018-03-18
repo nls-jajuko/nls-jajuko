@@ -64,6 +64,8 @@
         .tl-headline-date {
             font-size: 1rem!important;
         }
+        
+        .tools {position:absolute; right:6rem; top:0.9rem; z-index:1000;}
 
     </style>
 </head>
@@ -73,7 +75,7 @@
     <div id="map-container"></div>
     <div class="mapcarousel" id="mapcarousel" v-show="isShow">
         <div>
-            <div style="position:absolute; right:0.7rem; top:0.7rem; z-index:1000;">
+            <div class="tools">
                 <b-button v-on:click="reset">
                     <i class="fas fa-redo"></i>
                 </b-button>
