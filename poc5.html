@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link href="//fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+    <link title="timeline-styles" rel="stylesheet" href="//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+    <link title="timeline-styles" rel="stylesheet" href="//cdn.knightlab.com/libs/timeline3/latest/css/fonts/font.ubuntu.css">
+
+    <style>
+        html,
+        body,
+        #map-container {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Titillium Web', sans-serif;
+        }
+        
+        .mapcarousel {
+            border-radius: 5px;
+            width: 500px;
+            height: 290px;
+            padding: 10px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #003c88;
+        }
+        
+        #popup-container {
+            margin: 1rem;
+        }
+        
+        .slide-info {
+            color: white;
+        }
+        
+        #carousel1 {
+            text-shadow: 1px 1px 2px #333;
+        }
+        
+        .carousel-control-prev {
+            border: 1px solid white;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .carousel-control-next {
+            border: 1px solid white;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        #timeline-embed {
+            background-color: white;
+            z-index: 1000;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        
+        .tl-headline {
+            font-size: 1rem !important;
+        }
+        
+        .tl-headline-date {
+            font-size: 1rem!important;
+        }
+        
+        .tools {
+            position: absolute;
+            right: 6rem;
+            top: 0.9rem;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id='timeline-embed' style="width: 100%; height: 150px"></div>
+    <div id="map-container"></div>
+    <div class="mapcarousel" id="mapcarousel" v-show="isShow">
+        <div>
+            <div class="tools">
+                <b-button v-on:click="reset">
+                    <i class="fas fa-redo"></i>
+                </b-button>
+                <b-button v-on:click="expand">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </b-button>
+                <b-button v-on:click="close">
+                    <i class="far fa-check-circle"></i>
+                </b-button>
+            </div>
+            <b-carousel id="carousel1" controls indicators background="rgba(240,240,240,0.8)" :interval="0" :img-width=imgWidth :img-height=imgHeight v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
+                <b-carousel-slide v-for="(item, index) in images" :img-src=item.url :key="item.url">
+                    <span>Kuvat ml. {{item.year}}</span>
+                </b-carousel-slide>
+            </b-carousel>
+        </div>
+    </div>
+
+
+    <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch,Promise"></script>
+    <script src="//unpkg.com/vue"></script>
+    <script src="//cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
+    <script src="//cdn.jsdelivr.net/npm/color-js@1.0.3"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
+    <script src="//epsg.io/3067.js"></script>
+    <script src="//cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+
+    <script>
+        var wmsUrl = 'https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?',
+            data = {
+                begin: 1998,
+                yyyy: 2018,
+                bbox: undefined,
+                imgWidth: 480,
+                imgHeight: 270,
+                isShow: false,
+                images: [],
+                slide: 0,
+                sliding: null
+            },
+            epsg = 'EPSG:3067',
+            vectorSource = new ol.source.Vector({
+                features: []
+            }),
+            tileSource = new ol.source.TileWMS({
+                url: wmsUrl,
+                params: {
+                    'FORMAT': 'image/jpeg',
+                    'TRANSPARENT': false,
+                    'LAYERS': 'ortokuva'
+                        // &TIME=1985%2F2001&
+                }
+            }),
+            map = new ol.Map({
+                target: 'map-container',
+                layers: [
+                    new ol.layer.Tile({
+                        opacity: 0.9,
+                        source: tileSource
+                    }),
+                    new ol.layer.Vector({
+                        source: vectorSource,
+                        style: new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'black',
+                                width: 1,
+                                lineDash: [5, 10]
+                            }),
+                            image: new ol.style.Circle({
+                                radius: 7,
+                                fill: new ol.style.Fill({
+                                    color: '#ffcc33'
+                                })
+                            })
+                        })
+                    })
+                ],
+                view: new ol.View({
+                    projection: epsg,
+                    center: [377174.2090743212, 6673073.523698647],
+                    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5],
+                    resolution: 2,
+                    maxResolution: 8192,
+                    minResolution: 0.5
+                })
+            }),
+
+            additionalOptions = {
+                start_at_end: true,
+                default_bg_color: {
+                    r: 0,
+                    g: 0,
+                    b: 0
+                },
+                timenav_height: 100
+            },
+            timeline_json = {
+                "events": [
+                    /*{
+                                        unique_id: "1998",
+                                        "start_date": {
+
+                                            "year": "1998"
+                                        },
+                                        "text": {
+                                            "headline": "Kuvat ml. 1998",
+                                            "text": "<p>.</p>"
+                                        }
+                                    }, {
+                                        unique_id: "2008",
+                                        "start_date": {
+
+                                            "year": "2008"
+                                        },
+                                        "text": {
+                                            "headline": "Kuvat ml. 2008",
+                                            "text": "<p>.</p>"
+                                        }
+                                    }, {
+                                        unique_id: "2018",
+                                        "start_date": {
+
+                                            "year": "2018"
+                                        },
+                                        "text": {
+                                            "headline": "Kuvat ml. 2018",
+                                            "text": "<p>.</p>"
+                                        }
+                                    }*/
+                ]
+            };
+
+        _.each(_.range(data.begin, data.yyyy + 1), function(y) {
+            var year = '' + y;
+            timeline_json.events.push({
+
+                unique_id: year,
+                "start_date": {
+
+                    "year": year
+                },
+                "text": {
+                    "headline": "Kuvat ml. " + year,
+                    "text": "<p>.</p>"
+                }
+            });
+        });
+
+        var
+            timeline = new TL.Timeline('timeline-embed', timeline_json, additionalOptions),
+
+
+            overlay = new ol.Overlay({
+                element: document.getElementById('mapcarousel'),
+                positioning: 'center-center',
+                offset: [0, 0]
+            });
+
+        map.addOverlay(overlay);
+
+        map.on('click', function(e) {
+            var coordinate = e.coordinate,
+                pixel = map.getPixelFromCoordinate(coordinate),
+                res = map.getView().getResolution(),
+                w = data.imgWidth,
+                h = data.imgHeight,
+                lb = map.getCoordinateFromPixel([pixel[0] - w / 2, pixel[1] + h / 2]),
+                rt = map.getCoordinateFromPixel([pixel[0] + w / 2, pixel[1] - h / 2]),
+                lt = map.getCoordinateFromPixel([pixel[0] - w / 2, pixel[1] - h / 2]),
+                rb = map.getCoordinateFromPixel([pixel[0] + w / 2, pixel[1] + h / 2]),
+                bbox = [lb[0], lb[1], rt[0], rt[1]],
+
+                geom = ol.geom.Polygon.fromExtent(bbox),
+                featurething = new ol.Feature({
+                    name: "Thing",
+                    geometry: geom
+                });
+            vectorSource.addFeature(featurething);
+            vectorSource.changed();
+
+
+            console.log(bbox, featurething, geom);
+            overlay.setPosition(coordinate);
+
+            var newImages = [],
+                yearsForCoord = []; // tbd fetch from backend
+
+            _.each(timeline_json.events, function(el) {
+                yearsForCoord.push(el.unique_id);
+            });
+
+
+
+            _.each(_.reverse(yearsForCoord), function(y) {
+
+                var urlBase = tileSource.getUrls()[0] + "",
+                    urlParts = [];
+                _.each(tileSource.getParams(), function(val, key) {
+                    urlParts.push([key, val].join('='));
+                });
+                urlParts.push("REQUEST=GetMap&VERSION=1.3.0&SERVICE=WMS&STYLES=");
+                urlParts.push("CRS=" + epsg);
+                urlParts.push("WIDTH=" + w);
+                urlParts.push("HEIGHT=" + h);
+                urlParts.push("BBOX=" + bbox.join(','));
+                urlParts.push("TIME=" + data.begin + "/" + y);
+
+                var url = urlBase + urlParts.join('&');
+                newImages.push({
+                    year: y,
+                    url: url
+                });
+
+
+            });
+
+            data.bbox = bbox;
+            data.images = newImages;
+            data.isShow = true;
+
+        });
+
+        //https://github.com/NUKnightLab/TimelineJS3/blob/master/API.md
+
+        timeline.on('change', function(e) {
+            var y = e.unique_id;
+
+            if (!y) {
+                return;
+            }
+
+            if (y == data.yyyy) {
+                tileSource.updateParams({
+                    'TIME': undefined
+                });
+
+            } else {
+                tileSource.updateParams({
+                    'TIME': data.begin + '/' + y
+                });
+            }
+
+        })
+
+        var v = new Vue({
+            el: '#mapcarousel',
+            data: data,
+            methods: {
+                onSlideStart: function(slide) {
+                    this.sliding = true
+                },
+                onSlideEnd: function(slide) {
+                    this.sliding = false
+                },
+                close: function() {
+                    this.isShow = false;
+                },
+                expand: function() {
+                    var y = this.images[this.slide].year;
+                    if (!y) {
+                        return;
+                    }
+                    console.log("SET YEAR TO ", y);
+                    this.isShow = false;
+
+                    timeline.goToId(y + '');
+                },
+                reset: function() {
+
+                    timeline.goToId(this.yyyy + '');
+                    this.isShow = false;
+                }
+            }
+        });
+
+    </script>
+
+</body>
