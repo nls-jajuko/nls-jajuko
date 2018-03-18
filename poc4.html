@@ -44,11 +44,18 @@
         #timeline-embed {
             background-color: white;
             z-index: 1000;
-            position: absolute; left: 0px; top: 0px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
         }
         
-        .tl-headline { font-size: 1rem !important; }
-        .tl-headline-date { font-size: 1rem!important; }
+        .tl-headline {
+            font-size: 1rem !important;
+        }
+        
+        .tl-headline-date {
+            font-size: 1rem!important;
+        }
 
     </style>
 </head>
@@ -113,31 +120,16 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
 
     <script>
         var data = {
-            yyyy: '2018',
-            bbox: undefined,
-            imgWidth: 480,
-            imgHeight: 270,
-            isShow: false,
-            images: [],
-            samples: [{
-                url: "https://lorempixel.com/1024/480/technics/2/",
-                year: "1990"
-            }, {
-                url: "https://lorempixel.com/1024/480/technics/4/",
-                year: "1991"
-            }, {
-                url: "https://lorempixel.com/1024/480/technics/8/",
-                year: "1992"
-            }, {
-                url: "https://lorempixel.com/1024/480/technics/5/",
-                year: "1993"
-            }],
-            slide: 0,
-            sliding: null
-        };
-
-        var start = '1940',
-            center = [24, 60],
+                begin: '1940',
+                yyyy: '2018',
+                bbox: undefined,
+                imgWidth: 480,
+                imgHeight: 270,
+                isShow: false,
+                images: [],
+                slide: 0,
+                sliding: null
+            },
             epsg = 'EPSG:3067',
             vectorSource = new ol.source.Vector({
                 features: []
@@ -187,7 +179,7 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
                     minResolution: 0.5
                 })
             }),
-            timeline,
+
             additionalOptions = {
                 start_at_end: true,
                 default_bg_color: {
@@ -245,13 +237,15 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
                         "text": "<p>.</p>"
                     }
                 }]
-            };
+            },
+            timeline = new TL.Timeline('timeline-embed', timeline_json, additionalOptions),
 
-        var overlay = new ol.Overlay({
-            element: document.getElementById('mapcarousel'),
-            positioning: 'center-center',
-            offset: [0, 0]
-        });
+
+            overlay = new ol.Overlay({
+                element: document.getElementById('mapcarousel'),
+                positioning: 'center-center',
+                offset: [0, 0]
+            });
 
         map.addOverlay(overlay);
 
@@ -280,19 +274,28 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
             overlay.setPosition(coordinate);
 
             var newImages = [],
-                yearsForCoord = [1998, 2008, 2018]; // tbd fetch from backend
+                yearsForCoord = []; // tbd fetch from backend
 
-            _.each(_.reverse(_.clone(yearsForCoord)), function(y) {
-                var url = tileSource.getUrls()[0] + "";
+            _.each(timeline_json.events, function(el) {
+                yearsForCoord.push(el.unique_id);
+            });
+
+            var urlBase = tileSource.getUrls()[0] + "",
+                urlParts = [];
+
+            _.each(_.reverse(yearsForCoord), function(y) {
+
                 _.each(tileSource.getParams(), function(val, key) {
-                    url += key + "=" + val + "&";
+                    urlParts.push([key, val].join('='));
                 });
-                url += "REQUEST=GetMap&VERSION=1.3.0&SERVICE=WMS&STYLES=&";
-                url += "CRS=" + epsg + "&";
-                url += "WIDTH=" + w + "&";
-                url += "HEIGHT=" + h + "&";
-                url += 'BBOX=' + bbox.join(',') + "&";
-                url += "TIME=" + start + "/" + y;
+                urlParts.push("REQUEST=GetMap&VERSION=1.3.0&SERVICE=WMS&STYLES=");
+                urlParts.push("CRS=" + epsg);
+                urlParts.push("WIDTH=" + w);
+                urlParts.push("HEIGHT=" + h);
+                urlParts.push("BBOX=" + bbox.join(','));
+                urlParts.push("TIME=" + data.begin + "/" + y);
+
+                var url = urlBase + urlParts.join('&');
                 newImages.push({
                     year: y,
                     url: url
@@ -314,28 +317,27 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
 
         });
 
-        timeline = new TL.Timeline('timeline-embed', timeline_json,additionalOptions);
-        
-    //https://github.com/NUKnightLab/TimelineJS3/blob/master/API.md
-        
-        timeline.on('change',function(e) {
-            var y  = e.unique_id;
-            
-            if( !y ) {
+
+        //https://github.com/NUKnightLab/TimelineJS3/blob/master/API.md
+
+        timeline.on('change', function(e) {
+            var y = e.unique_id;
+
+            if (!y) {
                 return;
             }
-            
-            if( y === data.yyyy ) {
-                 tileSource.updateParams({
-                        'TIME': undefined
-                    });
-                
+
+            if (y === data.yyyy) {
+                tileSource.updateParams({
+                    'TIME': undefined
+                });
+
             } else {
-                    tileSource.updateParams({
-                        'TIME': start + '/' + y
-                    });
+                tileSource.updateParams({
+                    'TIME': data.begin + '/' + y
+                });
             }
-            
+
         })
 
         var v = new Vue({
@@ -359,10 +361,10 @@ https://avoin-karttakuva.maanmittauslaitos.fi/avoin/public/ows?SERVICE=WMS&VERSI
                     console.log("SET YEAR TO ", y);
                     this.isShow = false;
 
-                    timeline.goToId(y+'');
+                    timeline.goToId(y + '');
                 },
                 reset: function() {
-                   
+
                     timeline.goToId(this.yyyy);
                     this.isShow = false;
                 }
