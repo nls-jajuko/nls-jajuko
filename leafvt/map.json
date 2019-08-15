@@ -1,0 +1,134 @@
+{		
+    "version": 8,
+    "sources": {
+        "taustakartta": {
+            "type": "vector",
+            "tiles": ["https://avoin-karttakuva.maanmittauslaitos.fi/wmts-vt-service/vectortiles/v2/wmts/1.0.0/taustakartta/default/WGS84_Pseudo-Mercator/{z}/{y}/{x}.pbf?optimize=true"]
+        }
+
+    },
+    "layers": [
+       { 
+            "id":  "background",
+            "type": "background",
+            "paint": {
+                "background-color":"#FFFFFF"
+               }
+       },
+       {
+            "id": "sea",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "sea",
+            "paint": {
+		"fill-color": "rgba(0,144,187,0.5)"
+            }
+       },
+       {
+            "id": "lake",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "lake",
+            "paint": {
+		"fill-color": "rgba(0,144,247,0.3)"
+            }
+       },
+       {
+            "id": "river",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "river",
+            "paint": {
+                "fill-color": "rgba(0,144,247,0.5)"
+            }
+       },
+
+       {
+            "id": "park",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "park",
+            "paint": {
+                "fill-color": "#ECFFED",
+                "fill-outline-color": "#BAFD1C"
+ 
+            }
+       },
+
+       {
+            "id": "field",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "field",
+            "paint": {
+                "fill-color": "#FFFFE6",
+		"fill-outline-color": "#FFFB61"
+            }
+       },
+
+
+       {
+            "id": "contour",
+            "type": "line",
+            "source": "taustakartta",
+            "source-layer": "contour",
+            "paint": {
+                "line-width": 1,
+                "line-color": "#8B4513"
+            }
+       },
+
+
+       {
+            "id": "road",
+            "type": "line",
+            "source": "taustakartta",
+            "source-layer": "road",
+            "paint": {
+                "line-width": 3,
+                "line-color": "#c0c0c0"
+            }
+       },
+
+       {
+            "id": "railroad",
+            "type": "line",
+            "source": "taustakartta",
+            "source-layer": "railroad",
+            "paint": {
+                "line-width": 3,
+                "line-color": "#002000",
+		"line-dasharray": [20,2]
+            }
+       },
+
+       {
+            "id": "builtup",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "building",
+            "minzoom": 0,
+	    "maxzoom": 14,
+	    "paint": {
+                "fill-color": "rgba(250,32,0,0.3)"
+            }
+       },
+       {
+            "id": "building",
+            "type": "fill",
+            "source": "taustakartta",
+            "source-layer": "building",
+	    "minzoom": 14,
+	    "maxzoom": 24,
+            "paint": {
+                "fill-color": "#f02000",
+                "fill-outline-color": "#000000"
+
+            }
+       }
+
+
+
+
+    ]
+}
