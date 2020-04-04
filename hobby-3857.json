@@ -22,7 +22,6 @@
         "background-color": "white"
       }
     },
-
     {
       "id": "maasto_alue",
       "type": "fill",
@@ -52,7 +51,7 @@
           38400,
           38600,
           35401,
-          35402 
+          35402
         ],
         true,
         false
@@ -64,19 +63,48 @@
             "get",
             "kohdeluokka"
           ],
-          [35411,35412,35421,35422,35401,35402],
+          [
+            35411,
+            35421,
+            35401
+          ],
           "hsl(159, 40%, 88%)",
-          [34100,38600],
+          [
+            35412,
+            35422,
+            35402
+          ],
+          "#9adaaa",
+          [
+            35300
+
+          ],
+          "#9adfdd",
+          [
+            34100,
+            38600
+          ],
           "hsla(208, 11%, 75%, 0.5)",
-          [34700],
+          [
+            34700
+          ],
           "hsl(208, 27%, 85%)",
-          [38300,38700,38400,35300,39130],
+          [
+            38300,
+            38700,
+            38400,
+            39130
+          ],
           "hsl(207, 100%, 94%)",
-          [39110],
+          [
+            39110
+          ],
           "hsla(44, 100%, 83%, 0.84)",
-          [39120],
+          [
+            39120
+          ],
           "hsl(65, 57%, 91%)",
-         "hsla(360, 100%, 100%, 0)"
+          "hsla(360, 100%, 100%, 0)"
         ]
       }
     },
@@ -94,7 +122,7 @@
         [
           32111,
           32112,
-          32113,         
+          32113,
           32200,
           32300,
           32500,
@@ -105,7 +133,7 @@
           33100,
           34300,
           38900,
-          40200        
+          40200
         ],
         true,
         false
@@ -118,7 +146,7 @@
             "kohdeluokka"
           ],
           40200,
-          "hsl(0, 0%, 96%)",
+          "#f8fbf5",
           32611,
           "#f9f4d2",
           32200,
@@ -130,14 +158,45 @@
           32900,
           "hsl(87, 45%, 72%)",
           33100,
-          "hsl(110, 40%, 65%)",
+          "hsl(87, 65%, 82%)",
           34300,
           "hsl(60, 55%, 80%)",
           "#f7f7f3"
         ]
       }
     },
- {
+    {
+      "id": "maankaytto_reuna",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "maankaytto",
+      "filter": [
+        "match",
+        [
+          "get",
+          "kohdeluokka"
+        ],
+        [
+        
+          33100
+        ],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          [
+            "get",
+            "kohdeluokka"
+          ],
+          [33100],
+          "hsl(87, 15%, 52%)",
+          "hsl(87, 65%, 82%)"
+        ]
+      }
+    },
+    {
       "id": "lentokentta_alue",
       "type": "fill",
       "source": "taustakartta",
@@ -172,7 +231,6 @@
           true,
           false
         ]
-
       ],
       "layout": {},
       "paint": {
@@ -182,11 +240,24 @@
             "get",
             "kohdeluokka"
           ],
-          [32411, 23412],
+          [
+            32411,
+            23412
+          ],
           "#fde9db",
-          [32413, 32415,32416,32441,32442],
+          [
+            32413,
+            32415,
+            32416,
+            32441,
+            32442
+          ],
           "#f7f7f3",
-          [32414, 32417,32418],
+          [
+            32414,
+            32417,
+            32418
+          ],
           "#fffcf4",
           "hsl(0,0%,80%)"
         ],
@@ -196,11 +267,14 @@
             "get",
             "kohdeluokka"
           ],
-          [32441, 32442],
+          [
+            32441,
+            32442
+          ],
           "#c8c4c5",
           "hsla(360, 100%, 100%, 0)"
-     ]
-    }
+        ]
+      }
     },
     {
       "id": "lentokentta_viiva",
@@ -209,13 +283,21 @@
       "source-layer": "liikenne",
       "filter": [
         "any",
-        ["==", "kohdeluokka", 32431],
-        ["==", "kohdeluokka", 32432]
+        [
+          "==",
+          "kohdeluokka",
+          32431
         ],
-        "paint": {
-          "line-width": 7,
-          "line-color": "#c8c4c5"
-        }
+        [
+          "==",
+          "kohdeluokka",
+          32432
+        ]
+      ],
+      "paint": {
+        "line-width": 7,
+        "line-color": "#c8c4c5"
+      }
     },
     {
       "id": "lentokentta_viiva2",
@@ -224,13 +306,21 @@
       "source-layer": "liikenne",
       "filter": [
         "any",
-        ["==", "kohdeluokka", 32431],
-        ["==", "kohdeluokka", 32432]
+        [
+          "==",
+          "kohdeluokka",
+          32431
         ],
-        "paint": {
-          "line-width": 6,
-          "line-color": "#fde9db"
-        }
+        [
+          "==",
+          "kohdeluokka",
+          32432
+        ]
+      ],
+      "paint": {
+        "line-width": 6,
+        "line-color": "#fde9db"
+      }
     },
     {
       "id": "korkeus_viiva",
@@ -241,7 +331,7 @@
       "maxzoom": 20,
       "paint": {
         "line-color": "rgba(252, 179, 110, 1)",
-        "line-width":1
+        "line-width": 1
       }
     },
     {
@@ -250,10 +340,28 @@
       "source": "taustakartta",
       "source-layer": "korkeus",
       "minzoom": 13,
-      "filter": ["all",["has","korkeusarvo"],["==",["%",["get","korkeusarvo"],20000],0]],
+      "filter": [
+        "all",
+        [
+          "has",
+          "korkeusarvo"
+        ],
+        [
+          "==",
+          [
+            "%",
+            [
+              "get",
+              "korkeusarvo"
+            ],
+            20000
+          ],
+          0
+        ]
+      ],
       "paint": {
         "line-color": "rgba(252, 179, 110, 1)",
-        "line-width":2.5
+        "line-width": 2.5
       }
     },
     {
@@ -263,10 +371,28 @@
       "source-layer": "korkeus",
       "minzoom": 11,
       "maxzoom": 14,
-      "filter": ["all",["has","korkeus"],["==",["%",["get","korkeus"],20],0]],
+      "filter": [
+        "all",
+        [
+          "has",
+          "korkeus"
+        ],
+        [
+          "==",
+          [
+            "%",
+            [
+              "get",
+              "korkeus"
+            ],
+            20
+          ],
+          0
+        ]
+      ],
       "paint": {
         "line-color": "rgba(252, 179, 110, 1)",
-        "line-width":2
+        "line-width": 2
       }
     },
     {
@@ -294,7 +420,7 @@
       "source": "taustakartta",
       "source-layer": "vesisto_viiva",
       "paint": {
-        "line-color": "hsl(200, 80%, 85%)", 
+        "line-color": "hsl(200, 80%, 85%)",
         "line-width": [
           "interpolate",
           [
@@ -316,45 +442,34 @@
       "type": "line",
       "source": "taustakartta",
       "source-layer": "maastoaluereuna",
-      "filter": [ "all",
-                 [ "in", "kartografinenluokka", 32200,32300,32411,32412,32413,32414,32415,32416,32417,32418,33100 ],
-                 ["==", "kohdeluokka", 30211 ]
-                ],
-        "paint": {
+      "filter": [
+        "all",
+        [
+          "in",
+          "kartografinenluokka",
+          32200,
+          32300,
+          32411,
+          32412,
+          32413,
+          32414,
+          32415,
+          32416,
+          32417,
+          32418,
+          33100
+        ],
+        [
+          "==",
+          "kohdeluokka",
+          30211
+        ]
+      ],
+      "paint": {
         "line-color": "#c8c4c5",
         "line-width": 0.5
-        }
-    },
-    {
-        "id": "suojelualueet",
-        "type": "line",
-        "source": "taustakartta",
-        "source-layer": "alueraja",
-        "filter": [ "in", "kohdeluokka", 72100,72200,72201,72202,72400,72500,72600,72800 ],
-        "maxzoom": 14,
-        "paint": {
-          "line-width": 1,
-          "line-color": "rgba(0,192,0,1)"
-         
-        }
-
-    },
-    {
-      "id": "suojelualueet_reuna",
-      "type": "line",
-      "source": "taustakartta",
-      "source-layer": "alueraja",
-      "filter": [ "in", "kohdeluokka", 72100,72200,72201,72202,72400,72500,72600,72800 ],
-      "minzoom": 10,
-      "maxzoom": 14,
-       "paint": {
-          "line-width": 3,
-          "line-dasharray": [1,2],
-          "line-color": "rgba(0,192,0,1)"
-        
       }
-
-  },
+    },
     {
       "id": "tiet tunnelissa",
       "type": "line",
@@ -369,35 +484,47 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141,12132,12131,12122,12121,12112,12111,12313,12314,12136
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              -11
-            ],
-            true,
-            false
-          ]
+            12141,
+            12132,
+            12131,
+            12122,
+            12121,
+            12112,
+            12111,
+            12313,
+            12314,
+            12136
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            -11
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-        "line-dasharray": [32, 16],
+        "line-dasharray": [
+          32,
+          16
+        ],
         "line-width": [
           "interpolate",
           [
@@ -414,8 +541,7 @@
         ]
       }
     },
-
-        {
+    {
       "id": "ajotie, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -429,30 +555,30 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              -1
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            -1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -473,7 +599,7 @@
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -487,35 +613,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              -1
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            -1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -532,7 +661,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -546,35 +675,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              -1
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            -1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-dasharray": [
+          2,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -591,7 +723,7 @@
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -605,47 +737,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              -1
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            -1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-dasharray": [
+          3,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -662,7 +797,7 @@
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -676,42 +811,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              -1
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            -1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -791,7 +926,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -850,7 +985,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -909,7 +1044,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -925,7 +1060,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -968,7 +1103,6 @@
           10,
           4
         ]
-   
       }
     },
     {
@@ -1013,7 +1147,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -1030,7 +1164,7 @@
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -1072,7 +1206,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -1089,7 +1223,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, pinnan alla",
       "type": "line",
       "source": "taustakartta",
@@ -1131,7 +1265,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#a1d99b",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -1148,7 +1282,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, pinnan alla",
       "type": "line",
@@ -1175,7 +1308,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -1190,30 +1323,31 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#a1d99b",
-                "line-dasharray": [2, 2],
-                "line-width": [
-                  "interpolate",
-                  [
-                    "linear"
-                  ],
-                  [
-                    "zoom"
-                  ],
-                  5,
-                  2,
-                  10,
-                  4
-                ]
-           
+        "line-dasharray": [
+          2,
+          2
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          2,
+          10,
+          4
+        ]
       }
     },
-	
-	        {
+    {
       "id": "ajotie, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1227,34 +1361,34 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              0
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            0
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#808080",
         "line-width": [
           "interpolate",
           [
@@ -1265,13 +1399,13 @@
             "zoom"
           ],
           6,
-          1,
+          1.5,
           20,
           20
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1285,35 +1419,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              0
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            0
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -1330,7 +1467,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1344,35 +1481,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              0
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            0
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-color": "#b0b0b0",
+        "line-dasharray": [
+          4.5,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -1383,13 +1523,13 @@
             "zoom"
           ],
           6,
-          1,
+          0.5,
           20,
           20
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1403,47 +1543,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              0
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            0
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
-        "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-color": "#508050",
+        "line-dasharray": [
+          4.5,
+          0.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -1454,13 +1597,13 @@
             "zoom"
           ],
           6,
-          0.5,
+          1.2,
           20,
           15
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1474,42 +1617,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              0
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            0
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -1572,7 +1715,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -1589,7 +1732,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1631,7 +1774,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -1648,7 +1791,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1690,7 +1833,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -1707,7 +1850,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1723,7 +1866,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -1810,7 +1953,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -1820,14 +1963,14 @@
           [
             "zoom"
           ],
-          6,
+          3,
           4,
           20,
           80
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1869,7 +2012,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -1886,7 +2029,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, pinnalla",
       "type": "line",
       "source": "taustakartta",
@@ -1928,7 +2071,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -1945,7 +2088,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, pinnalla",
       "type": "line",
@@ -1972,7 +2114,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -1987,12 +2129,15 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#a1d99b",
-        "line-dasharray": [2, 2],
+        "line-dasharray": [
+          2,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -2008,9 +2153,7 @@
         ]
       }
     },
-	
-	
-	        {
+    {
       "id": "ajotie, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2024,30 +2167,30 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              1
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -2068,7 +2211,7 @@
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2082,35 +2225,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              1
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -2127,7 +2273,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2141,35 +2287,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              1
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-dasharray": [
+          2,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -2186,7 +2335,7 @@
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2200,47 +2349,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              1
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-dasharray": [
+          3,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -2257,7 +2409,7 @@
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2271,42 +2423,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              1
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -2369,7 +2521,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -2386,7 +2538,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2428,7 +2580,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -2445,7 +2597,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2487,7 +2639,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -2504,7 +2656,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2520,7 +2672,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -2563,7 +2715,6 @@
           10,
           3
         ]
-   
       }
     },
     {
@@ -2608,7 +2759,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eaeaea",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -2625,7 +2776,7 @@
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2667,7 +2818,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -2684,7 +2835,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, sillalla 1",
       "type": "line",
       "source": "taustakartta",
@@ -2726,7 +2877,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eaeaea",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -2743,7 +2894,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, sillalla 1",
       "type": "line",
@@ -2770,7 +2920,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -2785,30 +2935,31 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#a1d99b",
-                "line-dasharray": [2, 2],
-                "line-width": [
-                  "interpolate",
-                  [
-                    "linear"
-                  ],
-                  [
-                    "zoom"
-                  ],
-                  5,
-                  2,
-                  10,
-                  3
-                ]
-           
+        "line-dasharray": [
+          2,
+          2
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          2,
+          10,
+          3
+        ]
       }
     },
-	
-        {
+    {
       "id": "ajotie, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -2822,30 +2973,30 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              2
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -2866,7 +3017,7 @@
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -2880,35 +3031,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              2
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -2925,7 +3079,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -2939,35 +3093,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              2
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-dasharray": [
+          2,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -2984,7 +3141,7 @@
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -2998,47 +3155,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              2
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-dasharray": [
+          3,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -3055,7 +3215,7 @@
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -3069,42 +3229,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              2
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -3167,7 +3327,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -3184,7 +3344,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -3226,7 +3386,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -3243,7 +3403,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -3285,7 +3445,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -3302,7 +3462,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -3318,7 +3478,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -3361,7 +3521,6 @@
           10,
           3
         ]
-   
       }
     },
     {
@@ -3423,7 +3582,7 @@
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -3482,7 +3641,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, sillalla 2",
       "type": "line",
       "source": "taustakartta",
@@ -3524,7 +3683,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -3541,7 +3700,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, sillalla 2",
       "type": "line",
@@ -3568,7 +3726,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -3583,30 +3741,31 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
-                "line-dasharray": [2, 2],
-                "line-width": [
-                  "interpolate",
-                  [
-                    "linear"
-                  ],
-                  [
-                    "zoom"
-                  ],
-                  5,
-                  2,
-                  10,
-                  3
-                ]
-           
+        "line-color": "#a0a0a0",
+        "line-dasharray": [
+          2,
+          2
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          2,
+          10,
+          3
+        ]
       }
     },
-
-        {
+    {
       "id": "ajotie, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -3620,30 +3779,30 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              3
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            3
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -3664,7 +3823,7 @@
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -3678,35 +3837,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              3
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            3
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -3723,7 +3885,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -3737,35 +3899,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              3
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            3
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-dasharray": [
+          2,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -3782,7 +3947,7 @@
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -3796,47 +3961,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              3
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            3
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-dasharray": [
+          3,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -3853,7 +4021,7 @@
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -3867,42 +4035,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              3
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            3
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -3965,7 +4133,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -3982,7 +4150,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -4024,7 +4192,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -4041,7 +4209,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -4083,7 +4251,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -4100,7 +4268,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -4116,7 +4284,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -4159,7 +4327,6 @@
           10,
           3
         ]
-   
       }
     },
     {
@@ -4221,7 +4388,7 @@
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -4263,7 +4430,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -4280,7 +4447,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, sillalla 3",
       "type": "line",
       "source": "taustakartta",
@@ -4322,7 +4489,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -4339,7 +4506,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, sillalla 3",
       "type": "line",
@@ -4366,7 +4532,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -4381,30 +4547,31 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
-                "line-dasharray": [2, 2],
-                "line-width": [
-                  "interpolate",
-                  [
-                    "linear"
-                  ],
-                  [
-                    "zoom"
-                  ],
-                  5,
-                  2,
-                  10,
-                  3
-                ]
-           
+        "line-color": "#a0a0a0",
+        "line-dasharray": [
+          2,
+          2
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          2,
+          10,
+          3
+        ]
       }
     },
-
-        {
+    {
       "id": "ajotie, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4418,30 +4585,30 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              4
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            4
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -4462,7 +4629,7 @@
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4476,35 +4643,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              4
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            4
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -4521,7 +4691,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4535,35 +4705,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              4
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            4
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-dasharray": [
+          2,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -4580,7 +4753,7 @@
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4594,47 +4767,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              4
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            4
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-dasharray": [
+          3,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -4651,7 +4827,7 @@
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4665,42 +4841,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              4
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            4
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -4763,7 +4939,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -4780,7 +4956,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4822,7 +4998,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -4839,7 +5015,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4881,7 +5057,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -4898,7 +5074,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -4914,7 +5090,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -4957,7 +5133,6 @@
           10,
           3
         ]
-   
       }
     },
     {
@@ -5019,7 +5194,7 @@
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -5078,7 +5253,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, sillalla 4",
       "type": "line",
       "source": "taustakartta",
@@ -5120,7 +5295,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
+        "line-color": "#a0a0a0",
         "line-width": [
           "interpolate",
           [
@@ -5137,7 +5312,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, sillalla 4",
       "type": "line",
@@ -5164,7 +5338,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -5179,29 +5353,31 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#a1d99b",
-                "line-dasharray": [2, 2],
-                "line-width": [
-                  "interpolate",
-                  [
-                    "linear"
-                  ],
-                  [
-                    "zoom"
-                  ],
-                  5,
-                  2,
-                  10,
-                  3
-                ]
-           
+        "line-dasharray": [
+          2,
+          2
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          2,
+          10,
+          3
+        ]
       }
     },
-        {
+    {
       "id": "ajotie, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5215,30 +5391,30 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12141
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              5
-            ],
-            true,
-            false
-          ]
+            12141
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            5
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -5259,7 +5435,7 @@
         ]
       }
     },
-        {
+    {
       "id": "ajopolku, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5273,35 +5449,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12316
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              5
-            ],
-            true,
-            false
-          ]
+            12316
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            5
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [12, 2],
+        "line-dasharray": [
+          12,
+          2
+        ],
         "line-width": [
           "interpolate",
           [
@@ -5318,7 +5497,7 @@
         ]
       }
     },
-        {
+    {
       "id": "polku, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5332,35 +5511,38 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12313
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              5
-            ],
-            true,
-            false
-          ]
+            12313
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            5
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [2, 1.5],
+        "line-dasharray": [
+          2,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -5377,7 +5559,7 @@
         ]
       }
     },
-        {
+    {
       "id": "kavely- ja pyoratie, paallystamaton, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5391,47 +5573,50 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              1
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              5
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            5
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#90ca6f",
-                "line-dasharray": [3, 1.5],
+        "line-dasharray": [
+          3,
+          1.5
+        ],
         "line-width": [
           "interpolate",
           [
@@ -5448,7 +5633,7 @@
         ]
       }
     },
-{
+    {
       "id": "kavely- ja pyoratie, paallystetty, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5462,42 +5647,42 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12314
-            ],
-            true,
-            false
-          ],
-                  [
-            "match",
-            [
-              "get",
-              "paallyste"
-            ],
-            [
-              2
-            ],
-            true,
-            false
+            "get",
+            "kohdeluokka"
           ],
           [
-            "match",
-            [
-              "get",
-              "tasosijainti"
-            ],
-            [
-              5
-            ],
-            true,
-            false
-          ]
+            12314
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "paallyste"
+          ],
+          [
+            2
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            5
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
@@ -5560,7 +5745,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -5577,7 +5762,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_2a_2b_reuna, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5619,7 +5804,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -5636,7 +5821,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_reuna, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5678,7 +5863,7 @@
       ],
       "layout": {},
       "paint": {
-        "line-color": "#ccc",
+        "line-color": "#000",
         "line-width": [
           "interpolate",
           [
@@ -5695,7 +5880,7 @@
         ]
       }
     },
-        {
+    {
       "id": "rautatie_reuna, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5711,7 +5896,7 @@
         ],
         [
           "match",
-            [
+          [
             "get",
             "kohdeluokka"
           ],
@@ -5754,7 +5939,6 @@
           10,
           3
         ]
-   
       }
     },
     {
@@ -5816,7 +6000,7 @@
         ]
       }
     },
-{
+    {
       "id": "tiet_2a_2b_taytto, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5875,7 +6059,7 @@
         ]
       }
     },
-        {
+    {
       "id": "tiet_3a_3b_taytto, sillalla 5",
       "type": "line",
       "source": "taustakartta",
@@ -5934,7 +6118,6 @@
         ]
       }
     },
-    
     {
       "id": "rautatie_taytto, sillalla 5",
       "type": "line",
@@ -5961,7 +6144,7 @@
             14112,
             14131,
             14121
-            ],
+          ],
           true,
           false
         ],
@@ -5976,26 +6159,28 @@
           ],
           true,
           false
-        ]		  		  
+        ]
       ],
       "layout": {},
       "paint": {
-        "line-color": "#eeeeee",
-                "line-dasharray": [2, 2],
-                "line-width": [
-                  "interpolate",
-                  [
-                    "linear"
-                  ],
-                  [
-                    "zoom"
-                  ],
-                  5,
-                  2,
-                  10,
-                  3
-                ]
-           
+        "line-color": "#a0a0a0",
+        "line-dasharray": [
+          2,
+          2
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          5,
+          2,
+          10,
+          3
+        ]
       }
     },
     {
@@ -6012,24 +6197,27 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              12151,
-              12152
-            ],
-            true,
-            false
-          ]
+            "get",
+            "kohdeluokka"
+          ],
+          [
+            12151,
+            12152
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [6, 8],
+        "line-dasharray": [
+          6,
+          8
+        ],
         "line-width": [
           "interpolate",
           [
@@ -6060,24 +6248,27 @@
           ],
           "LineString"
         ],
+        [
+          "match",
           [
-            "match",
-            [
-              "get",
-              "kohdeluokka"
-            ],
-            [
-              16511,
-              16512
-            ],
-            true,
-            false
-          ]
+            "get",
+            "kohdeluokka"
+          ],
+          [
+            16511,
+            16512
+          ],
+          true,
+          false
+        ]
       ],
       "layout": {},
       "paint": {
         "line-color": "#ccc",
-                "line-dasharray": [6, 8],
+        "line-dasharray": [
+          6,
+          8
+        ],
         "line-width": [
           "interpolate",
           [
@@ -6110,28 +6301,144 @@
       "source": "taustakartta",
       "source-layer": "rakennus",
       "paint": {
-        "fill-color": "hsl(0, 0, 65%)"
+        "fill-color": [
+          "match",
+          [
+            "get",
+            "kohdeluokka"
+          ],
+          [42110,42111,42112,42210,42211,42213],
+          "#f8bdbf",
+          [42130,42131,42132,42230,42231,42232],
+          "#f9f9d2",
+          "#c0d0d0"
+        ]
       }
     },
-  
-     {
-       "id": "rakennelmat",
-       "type": "line",
-       "source": "taustakartta",
-       "source-layer": "rakennelma",
-       "filter": [
-           "any",
-           ["==", "kohdeluokka", 45700],
-           ["==", "kohdeluokka", 45111],
-           ["==", "kohdeluokka", 45112],
-           ["==", "kohdeluokka", 44500]
-         ],
-       "paint": {
-         "line-color": "#918a8c",
-         "line-width": 0.5
-
-       }
-     },	
+    {
+      "id": "rakennus_reuna",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "rakennus",
+      "paint": {
+        "line-color": "#808080"
+      }
+    },
+    {
+      "id": "rakennelmat",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "rakennelma",
+      "filter": [
+        "any",
+        [
+          "==",
+          "kohdeluokka",
+          45700
+        ],
+        [
+          "==",
+          "kohdeluokka",
+          45111
+        ],
+        [
+          "==",
+          "kohdeluokka",
+          45112
+        ]
+      ],
+      "paint": {
+        "line-color": "#918a8c",
+        "line-width": 0.5
+      }
+    },
+    {
+      "id": "rakennelmat_ilmarata",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "rakennelma",
+      "filter": [
+        "any",
+        [
+          "==",
+          "kohdeluokka",
+          44500
+        ]
+      ],
+      "paint": {
+        "line-color": "#191000",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "rakennelmat_ilmarata_tolppa",
+      "type": "circle",
+      "source": "taustakartta",
+      "source-layer": "rakennelma",
+      "filter": 
+        [
+          "==",
+          "kohdeluokka",
+          44591
+        ],
+      "paint": {
+        "circle-color": "#191000",
+        "circle-radius": 3
+      }
+    },
+    {
+      "id": "rakennelmat_suurjannitelinja",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "rakennelma",
+      "filter": [
+        "all",
+        [
+          "match",
+          [
+            "get",
+            "tasosijainti"
+          ],
+          [
+            1
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "get",
+            "kohdeluokka"
+          ],
+          [
+            22311,22312
+          ],
+          true,
+          false
+        ]        
+      ],
+      "paint": {
+        "line-color": "#c51b8a",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "rakennelmat_suurjannite_tolppa",
+      "type": "circle",
+      "source": "taustakartta",
+      "source-layer": "rakennelma",
+      "filter": 
+        [
+          "==",
+          "kohdeluokka",
+          22392
+        ],
+      "paint": {
+        "circle-color": "#dd1c77",
+        "circle-radius": 2
+      }
+    },
     {
       "id": "tienimet",
       "type": "symbol",
@@ -6139,7 +6446,11 @@
       "source-layer": "liikenne",
       "filter": [
         "all",
-        ["<", "tasosijainti", 1]
+        [
+          "<",
+          "tasosijainti",
+          1
+        ]
       ],
       "layout": {
         "text-field": "{nimi_suomi}        {nimi_ruotsi}",
@@ -6147,16 +6458,15 @@
           "Arial"
         ],
         "symbol-placement": "line",
-        "text-size": 11
+        "text-size": 12
       },
       "paint": {
-        "text-color": "rgba(69, 86, 71, 1)",
+        "text-color": "#000",
         "text-halo-color": "#fff",
-        "text-halo-width": 1,
+        "text-halo-width": 1.5,
         "text-halo-blur": 1
       }
     },
-
     {
       "id": "nimisto-maasto-vedet",
       "type": "symbol",
@@ -6598,8 +6908,16 @@
       "source-layer": "maasto_viiva",
       "filter": [
         "any",
-        ["==", "kohdeluokka", 34400],
-        ["==", "kohdeluokka", 34500]
+        [
+          "==",
+          "kohdeluokka",
+          34400
+        ],
+        [
+          "==",
+          "kohdeluokka",
+          34500
+        ]
       ],
       "paint": {
         "line-width": [
@@ -6626,8 +6944,16 @@
       "source-layer": "maasto_viiva",
       "filter": [
         "any",
-        ["==", "kohdeluokka", 34400],
-        ["==", "kohdeluokka", 34500]
+        [
+          "==",
+          "kohdeluokka",
+          34400
+        ],
+        [
+          "==",
+          "kohdeluokka",
+          34500
+        ]
       ],
       "minzoom": 14,
       "paint": {
@@ -6660,7 +6986,10 @@
           20,
           30
         ],
-        "line-dasharray": [0.1,1]
+        "line-dasharray": [
+          0.1,
+          1
+        ]
       }
     },
     {
@@ -6670,8 +6999,16 @@
       "source-layer": "maasto_piste",
       "filter": [
         "any",
-        ["==", "kohdeluokka", 34600],
-        ["==", "kohdeluokka", 72310]
+        [
+          "==",
+          "kohdeluokka",
+          34600
+        ],
+        [
+          "==",
+          "kohdeluokka",
+          72310
+        ]
       ],
       "paint": {
         "circle-radius": [
@@ -6690,8 +7027,58 @@
         ],
         "circle-color": "black"
       }
+    },
+    {
+      "id": "suojelualueet",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "alueraja",
+      "filter": [
+        "in",
+        "kohdeluokka",
+        72100,
+        72200,
+        72201,
+        72202,
+        72400,
+        72500,
+        72600,
+        72800
+      ],
+      "maxzoom": 14,
+      "paint": {
+        "line-width": 1,
+        "line-color": "rgba(0,192,0,1)"
+      }
+    },
+    {
+      "id": "suojelualueet_reuna",
+      "type": "line",
+      "source": "taustakartta",
+      "source-layer": "alueraja",
+      "filter": [
+        "in",
+        "kohdeluokka",
+        72100,
+        72200,
+        72201,
+        72202,
+        72400,
+        72500,
+        72600,
+        72800
+      ],
+      "minzoom": 10,
+      "maxzoom": 15,
+      "paint": {
+        "line-width": 3,
+        "line-dasharray": [
+          1,
+          2
+        ],
+        "line-color": "rgba(0,192,0,1)"
+      }
     }
   ],
   "id": "NLS-Basemap"
 }
-
