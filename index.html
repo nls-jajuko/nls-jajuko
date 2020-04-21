@@ -341,8 +341,12 @@ max-height: 20vw;
       });
     }
 
-    let geocoding_search_url = 'https://beta-paikkatieto.maanmittauslaitos.fi/geocoding/v1/pelias/search?',
-      geocoding_similar_url = 'https://beta-paikkatieto.maanmittauslaitos.fi/geocoding/v1/searchterm/similar?';
+    let apikey = '7cd2ddae-9f2e-481c-99d0-404e7bc7a0b2',
+        apikeypart = 'api-key='+apikey,
+        geocoding_search_url = 
+        'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v1/pelias/search?'+apikeypart+'&',
+        geocoding_similar_url = 
+       'https://avoin-paikkatieto.maanmittauslaitos.fi/geocoding/v1/searchterm/similar?'+apikeypart+'&';
 
     var geocoding_controller = new AbortController(),
       geocoding_signal = geocoding_controller.signal;
